@@ -40,3 +40,63 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
         Route::post('/password',                                    'ProfileController@updatePassword')->name('update-password');
     });
 });
+
+/* Auto-generated admin routes */
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+    Route::prefix('admin')->namespace('Admin')->name('admin/')->group(static function() {
+        Route::prefix('products')->name('products/')->group(static function() {
+            Route::get('/',                                             'ProductsController@index')->name('index');
+            Route::get('/create',                                       'ProductsController@create')->name('create');
+            Route::post('/',                                            'ProductsController@store')->name('store');
+            Route::get('/{product}/edit',                               'ProductsController@edit')->name('edit');
+            Route::post('/bulk-destroy',                                'ProductsController@bulkDestroy')->name('bulk-destroy');
+            Route::post('/{product}',                                   'ProductsController@update')->name('update');
+            Route::delete('/{product}',                                 'ProductsController@destroy')->name('destroy');
+        });
+    });
+});
+
+/* Auto-generated admin routes */
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+    Route::prefix('admin')->namespace('Admin')->name('admin/')->group(static function() {
+        Route::prefix('categories')->name('categories/')->group(static function() {
+            Route::get('/',                                             'CategoriesController@index')->name('index');
+            Route::get('/create',                                       'CategoriesController@create')->name('create');
+            Route::post('/',                                            'CategoriesController@store')->name('store');
+            Route::get('/{category}/edit',                              'CategoriesController@edit')->name('edit');
+            Route::post('/bulk-destroy',                                'CategoriesController@bulkDestroy')->name('bulk-destroy');
+            Route::post('/{category}',                                  'CategoriesController@update')->name('update');
+            Route::delete('/{category}',                                'CategoriesController@destroy')->name('destroy');
+        });
+    });
+});
+
+/* Auto-generated admin routes */
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+    Route::prefix('admin')->namespace('Admin')->name('admin/')->group(static function() {
+        Route::prefix('brands')->name('brands/')->group(static function() {
+            Route::get('/',                                             'BrandsController@index')->name('index');
+            Route::get('/create',                                       'BrandsController@create')->name('create');
+            Route::post('/',                                            'BrandsController@store')->name('store');
+            Route::get('/{brand}/edit',                                 'BrandsController@edit')->name('edit');
+            Route::post('/bulk-destroy',                                'BrandsController@bulkDestroy')->name('bulk-destroy');
+            Route::post('/{brand}',                                     'BrandsController@update')->name('update');
+            Route::delete('/{brand}',                                   'BrandsController@destroy')->name('destroy');
+        });
+    });
+});
+
+/* Auto-generated admin routes */
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+    Route::prefix('admin')->namespace('Admin')->name('admin/')->group(static function() {
+        Route::prefix('inventories')->name('inventories/')->group(static function() {
+            Route::get('/',                                             'InventoriesController@index')->name('index');
+            Route::get('/create',                                       'InventoriesController@create')->name('create');
+            Route::post('/',                                            'InventoriesController@store')->name('store');
+            Route::get('/{inventory}/edit',                             'InventoriesController@edit')->name('edit');
+            Route::post('/bulk-destroy',                                'InventoriesController@bulkDestroy')->name('bulk-destroy');
+            Route::post('/{inventory}',                                 'InventoriesController@update')->name('update');
+            Route::delete('/{inventory}',                               'InventoriesController@destroy')->name('destroy');
+        });
+    });
+});

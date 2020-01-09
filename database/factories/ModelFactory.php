@@ -16,4 +16,51 @@ $factory->define(Brackets\AdminAuth\Models\AdminUser::class, function (Faker\Gen
         'updated_at' => $faker->dateTime,
         
     ];
+});/** @var  \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Models\Product::class, static function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->firstName,
+        'spu' => $faker->sentence,
+        'price' => $faker->randomNumber(5),
+        'market_price' => $faker->randomNumber(5),
+        'promote_price' => $faker->randomNumber(5),
+        'is_on_sale' => $faker->boolean(),
+        'is_promote' => $faker->boolean(),
+        'description' => $faker->sentence,
+        'details' => $faker->text(),
+        'created_at' => $faker->dateTime,
+        'updated_at' => $faker->dateTime,
+        'category_id' => $faker->sentence,
+        'brand_id' => $faker->sentence,
+        
+        
+    ];
+});
+/** @var  \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Models\Category::class, static function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->firstName,
+        
+        
+    ];
+});
+/** @var  \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Models\Brand::class, static function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->firstName,
+        
+        
+    ];
+});
+/** @var  \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Models\Inventory::class, static function (Faker\Generator $faker) {
+    return [
+        'product_id' => $faker->sentence,
+        'product_attr' => $faker->sentence,
+        'sku' => $faker->sentence,
+        'qty' => $faker->sentence,
+        'shelf' => $faker->sentence,
+        
+        
+    ];
 });
