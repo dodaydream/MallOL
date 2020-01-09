@@ -1,0 +1,20 @@
+version: '3.6'
+
+services:
+    mallol:
+        tty: true
+        image: bitnami/laravel:6.4.0
+        environment:
+            - DB_HOST=mallol-mysql
+            - DB_USERNAME=root
+            - DB_DATABASE=mallol
+            - DB_PASSWORD=secret
+        ports:
+            - 3000:3000
+        volumes:
+            - ./:/app
+    mallol-mysql:
+        image: 'mysql:5.7.21'
+        environment:
+            - MYSQL_ROOT_PASSWORD=secret
+            - MYSQL_DATABASE=mallol
