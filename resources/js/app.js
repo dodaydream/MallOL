@@ -23,6 +23,7 @@ import 'buefy/dist/buefy.css'
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('product', require('./components/Product.vue').default);
 Vue.use(Buefy)
 
 /**

@@ -32,7 +32,8 @@
             <b-navbar class="container" fixed-top>
                 <template slot="brand">
                     <b-navbar-item tag="router-link" :to="{ path: '/' }">
-                        {{ config('app.name', 'Laravel') }}
+                        <b-icon icon="shopping"></b-icon>
+                        <span>{{ config('app.name', 'Laravel') }}</span>
                     </b-navbar-item>
                 </template>
                 <template slot="start">
