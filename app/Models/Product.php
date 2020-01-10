@@ -38,6 +38,10 @@ class Product extends Model implements HasMedia
         return $this->belongsTo(Brand::class);
     }
 
+    public function inventories() {
+        return $this->hasMany(Inventory::class);
+    }
+
     protected $fillable = [
         'name',
         'spu',

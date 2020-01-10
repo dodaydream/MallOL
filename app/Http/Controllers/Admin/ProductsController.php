@@ -129,6 +129,7 @@ class ProductsController extends Controller
     public function edit(Product $product)
     {
         $this->authorize('admin.product.edit', $product);
+        $product->load('inventories');
 
 
         return view('admin.product.edit', [
