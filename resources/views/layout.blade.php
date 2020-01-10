@@ -4,11 +4,21 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>MallOL</title>
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <title>{{ config('app.name', 'Laravel') }}</title>
+
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}" defer></script>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="dns-prefetch" href="//fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css">
+
+        <!-- Styles -->
+        <!--link href="{{ asset('css/app.css') }}" rel="stylesheet"-->
 
         <style>
         .custom .dropdown-content {
@@ -22,7 +32,7 @@
             <b-navbar class="container" fixed-top>
                 <template slot="brand">
                     <b-navbar-item tag="router-link" :to="{ path: '/' }">
-                        Mall OL
+                        {{ config('app.name', 'Laravel') }}
                     </b-navbar-item>
                 </template>
                 <template slot="start">
@@ -46,8 +56,18 @@
                                     <b-icon icon="account"></b-icon>
                                 </button>
 
-                                <b-dropdown-item aria-role="listitem">Log in</b-dropdown-item>
-                                <b-dropdown-item aria-role="listitem">Register</b-dropdown-item>
+                        @guest
+                                <b-dropdown-item aria-role="listitem" has-link><a href="login">Log in</a></b-dropdown-item>
+                                <b-dropdown-item aria-role="listitem" has-link><a href="register">Register</a></b-dropdown-item>
+                        @else
+                                <b-dropdown-item aria-role="listitem" has-link><a href="register">{{ Auth::user()->name }}</a></b-dropdown-item>
+                                <b-dropdown-item aria-role="listitem" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">Logout</b-dropdown-item>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;" ref="logoutfrm">
+                                        @csrf
+                                    </form>
+                        @endguest
+
                                 <b-dropdown-item aria-role="listitem">Track my orders</b-dropdown-item>
                             </b-dropdown>
 
@@ -122,20 +142,6 @@
                 </div>
             </footer>
 
-            <div class="flex-center position-ref full-height">
-                @if (Route::has('login'))
-                    <div class="top-right links">
-                        @auth
-                            <a href="{{ url('/home') }}">Home</a>
-                        @else
-                            <a href="{{ route('login') }}">Login</a>
-
-                    @endauth
-                </div>
-            @endif
-
-         </div>
-    </div>
-    <script src="{{ mix('/js/app.js') }}"></script>
+        </div>
     </body>
 </html>

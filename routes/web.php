@@ -100,3 +100,7 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
         });
     });
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
