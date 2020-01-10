@@ -111862,6 +111862,7 @@ __webpack_require__.r(__webpack_exports__);
 
 Vue.component('product-form', {
   mixins: [_app_components_Form_AppForm__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  props: ['categories', 'brands'],
   data: function data() {
     return {
       form: {
@@ -111874,10 +111875,33 @@ Vue.component('product-form', {
         is_promote: false,
         description: '',
         details: '',
-        category_id: '',
-        brand_id: ''
-      }
+        category_id: null,
+        brand_id: null
+      },
+      opt: {
+        brand: null,
+        category: null
+      },
+      mediaCollections: ['gallery']
     };
+  },
+  created: function created() {
+    var _this = this;
+
+    if (this.data) {
+      this.opt.brand = this.brands.find(function (b) {
+        return b.id === _this.data.brand_id;
+      });
+      this.opt.category = this.categories.find(function (b) {
+        return b.id === _this.data.category_id;
+      });
+    }
+  },
+  methods: {
+    optChange: function optChange() {
+      this.form.category_id = this.opt.category.id;
+      this.form.brand_id = this.opt.brand.id;
+    }
   }
 });
 

@@ -49,17 +49,16 @@
                                             </label>
                                         </th>
 
-                                        <th is='sortable' :column="'id'">{{ trans('admin.product.columns.id') }}</th>
-                                        <th is='sortable' :column="'name'">{{ trans('admin.product.columns.name') }}</th>
                                         <th is='sortable' :column="'spu'">{{ trans('admin.product.columns.spu') }}</th>
+                                        <th is='sortable' :column="'name'">{{ trans('admin.product.columns.name') }}</th>
+                                        <th is='sortable' :column="'category_id'">{{ trans('admin.product.columns.category_id') }}</th>
+                                        <th is='sortable' :column="'brand_id'">{{ trans('admin.product.columns.brand_id') }}</th>
                                         <th is='sortable' :column="'price'">{{ trans('admin.product.columns.price') }}</th>
                                         <th is='sortable' :column="'market_price'">{{ trans('admin.product.columns.market_price') }}</th>
                                         <th is='sortable' :column="'promote_price'">{{ trans('admin.product.columns.promote_price') }}</th>
-                                        <th is='sortable' :column="'is_on_sale'">{{ trans('admin.product.columns.is_on_sale') }}</th>
-                                        <th is='sortable' :column="'is_promote'">{{ trans('admin.product.columns.is_promote') }}</th>
+                                        <th is='sortable' :column="'is_on_sale'">{{ trans('admin.product.columns.on_sale') }}</th>
+                                        <th is='sortable' :column="'is_promote'">{{ trans('admin.product.columns.promote') }}</th>
                                         <th is='sortable' :column="'description'">{{ trans('admin.product.columns.description') }}</th>
-                                        <th is='sortable' :column="'category_id'">{{ trans('admin.product.columns.category_id') }}</th>
-                                        <th is='sortable' :column="'brand_id'">{{ trans('admin.product.columns.brand_id') }}</th>
 
                                         <th></th>
                                     </tr>
@@ -83,17 +82,26 @@
                                             </label>
                                         </td>
 
-                                    <td>@{{ item.id }}</td>
-                                        <td>@{{ item.name }}</td>
                                         <td>@{{ item.spu }}</td>
-                                        <td>@{{ item.price }}</td>
-                                        <td>@{{ item.market_price }}</td>
-                                        <td>@{{ item.promote_price }}</td>
-                                        <td>@{{ item.is_on_sale }}</td>
-                                        <td>@{{ item.is_promote }}</td>
+                                        <td>@{{ item.name }}</td>
+                                        <td>@{{ item.category.name }}</td>
+                                        <td>@{{ item.brand.name }}</td>
+                                        <td>$@{{ item.price }}</td>
+                                        <td>$@{{ item.market_price }}</td>
+                                        <td>$@{{ item.promote_price }}</td>
+                                        <td>
+                                        <label class="switch switch-3d switch-success">
+                                            <input type="checkbox" class="switch-input" v-model="collection[index].is_on_sale" @change="toggleSwitch(item.resource_url, 'is_on_sale', collection[index])">
+                                            <span class="switch-slider"></span>
+                                        </label>
+</td>
+                                        <td>
+                                        <label class="switch switch-3d switch-success">
+                                            <input type="checkbox" class="switch-input" v-model="collection[index].is_promote" @change="toggleSwitch(item.resource_url, 'is_promote', collection[index])">
+                                            <span class="switch-slider"></span>
+                                        </label>
+</td>
                                         <td>@{{ item.description }}</td>
-                                        <td>@{{ item.category_id }}</td>
-                                        <td>@{{ item.brand_id }}</td>
                                         
                                         <td>
                                             <div class="row no-gutters">

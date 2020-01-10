@@ -35,8 +35,8 @@ class UpdateProduct extends FormRequest
             'is_promote' => ['nullable', 'boolean'],
             'description' => ['nullable', 'string'],
             'details' => ['nullable', 'string'],
-            'category_id' => ['nullable', 'string'],
-            'brand_id' => ['nullable', 'string'],
+            'category_id' => ['nullable', 'integer'],
+            'brand_id' => ['nullable', 'integer'],
             
         ];
     }

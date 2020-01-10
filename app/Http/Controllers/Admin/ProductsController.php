@@ -9,6 +9,8 @@ use App\Http\Requests\Admin\Product\IndexProduct;
 use App\Http\Requests\Admin\Product\StoreProduct;
 use App\Http\Requests\Admin\Product\UpdateProduct;
 use App\Models\Product;
+use App\Models\Brand;
+use App\Models\Category;
 use Brackets\AdminListing\Facades\AdminListing;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -40,7 +42,18 @@ class ProductsController extends Controller
             ['id', 'name', 'spu', 'price', 'market_price', 'promote_price', 'is_on_sale', 'is_promote', 'description', 'category_id', 'brand_id'],
 
             // set columns to searchIn
-            ['id', 'name', 'spu', 'description', 'details']
+            ['id', 'name', 'spu', 'description', 'details'],
+
+            function ($query) use ($request) {
+                $query->with(['category']);
+                $query->with(['brand']);
+                if($request->has('category')){
+                    $query->whereIn('category', $request->get('category'));
+                }
+                if($request->has('brand')){
+                    $query->whereIn('brand', $request->get('brand'));
+                }
+            }
         );
 
         if ($request->ajax()) {
@@ -65,7 +78,10 @@ class ProductsController extends Controller
     {
         $this->authorize('admin.product.create');
 
-        return view('admin.product.create');
+        return view('admin.product.create',[
+            'categories' => Category::all(),
+            'brands' => Brand::all()
+        ]);
     }
 
     /**
@@ -117,6 +133,8 @@ class ProductsController extends Controller
 
         return view('admin.product.edit', [
             'product' => $product,
+            'categories' => Category::all(),
+            'brands' => Brand::all()
         ]);
     }
 

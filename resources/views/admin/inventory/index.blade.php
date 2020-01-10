@@ -49,12 +49,11 @@
                                             </label>
                                         </th>
 
-                                        <th is='sortable' :column="'id'">{{ trans('admin.inventory.columns.id') }}</th>
                                         <th is='sortable' :column="'product_id'">{{ trans('admin.inventory.columns.product_id') }}</th>
-                                        <th is='sortable' :column="'product_attr'">{{ trans('admin.inventory.columns.product_attr') }}</th>
                                         <th is='sortable' :column="'sku'">{{ trans('admin.inventory.columns.sku') }}</th>
-                                        <th is='sortable' :column="'qty'">{{ trans('admin.inventory.columns.qty') }}</th>
+                                        <th is='sortable' :column="'product_attr'">{{ trans('admin.inventory.columns.product_attr') }}</th>
                                         <th is='sortable' :column="'shelf'">{{ trans('admin.inventory.columns.shelf') }}</th>
+                                        <th is='sortable' :column="'qty'">{{ trans('admin.inventory.columns.qty') }}</th>
 
                                         <th></th>
                                     </tr>
@@ -78,12 +77,11 @@
                                             </label>
                                         </td>
 
-                                    <td>@{{ item.id }}</td>
                                         <td>@{{ item.product_id }}</td>
-                                        <td>@{{ item.product_attr }}</td>
                                         <td>@{{ item.sku }}</td>
-                                        <td>@{{ item.qty }}</td>
+                                        <td>@{{ item.product_attr }}</td>
                                         <td>@{{ item.shelf }}</td>
+                                        <td>@{{ item.qty }}</td>
                                         
                                         <td>
                                             <div class="row no-gutters">
