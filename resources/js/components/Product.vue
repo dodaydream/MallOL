@@ -31,7 +31,7 @@
         
         <section>
             <b-button type="is-primary" outlined>Buy now</b-button>
-            <b-button icon-left="cart-plus" type="is-primary">Add to Cart</b-button>
+            <b-button icon-left="cart-plus" type="is-primary" @click="addToCart" :disabled="selectedAttr === null">Add to Cart</b-button>
         </section>
     </div>
 
@@ -63,12 +63,29 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     props: ['product', 'media'],
     data () {
         return {
             selectedAttr: null
         } 
+    },
+    methods: {
+        ...mapActions('cart', [
+            'addInventoryToCart'
+        ]),
+        addToCart () {
+            if (this.selectedAttr) {
+                const inventory = this.product.inventories.find(inv => inv.id ===this.selectedAttr)
+    console.log(inventory)
+                this.addInventoryToCart({
+                    product: this.product,
+                    inventory: inventory
+                })
+            }
+        }
     }
 }
 </script>

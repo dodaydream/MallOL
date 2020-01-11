@@ -114,17 +114,9 @@
                                     custom
                                     paddingless
                                 >
-                                    <div class="modal-card" style="width:350px;">
-                                        <header class="modal-card-head">
-                                            <p class="modal-card-title">Shopping Cart</p>
-                                        </header>
 
-                                        <footer class="modal-card-foot">
-                                            <b-button @click="clickMe">View Bag</b-button>
-                                            <b-button @click="clickMe" type="is-primary">Go to Checkout</b-button>
-                                        </footer>
-                                    </div>
-                                </b-dropdown-item>
+                                    <cart />
+                                                                                         </b-dropdown-item>
                             </b-dropdown>
                         </div>
                     </b-navbar-item>

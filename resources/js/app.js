@@ -8,6 +8,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import Vuex from 'vuex'
+import store from './store'
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 
@@ -24,7 +26,9 @@ import 'buefy/dist/buefy.css'
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('product', require('./components/Product.vue').default);
+Vue.component('cart', require('./components/Cart.vue').default);
 Vue.use(Buefy)
+Vue.use(Vuex)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -34,4 +38,5 @@ Vue.use(Buefy)
 
 const app = new Vue({
     el: '#app',
+    store
 });
