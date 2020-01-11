@@ -58,10 +58,10 @@
                                 </button>
 
                         @guest
-                                <b-dropdown-item aria-role="listitem" has-link><a href="login">Log in</a></b-dropdown-item>
-                                <b-dropdown-item aria-role="listitem" has-link><a href="register">Register</a></b-dropdown-item>
+                                <b-dropdown-item aria-role="listitem" has-link><a href="/login">Log in</a></b-dropdown-item>
+                                <b-dropdown-item aria-role="listitem" has-link><a href="/register">Register</a></b-dropdown-item>
                         @else
-                                <b-dropdown-item aria-role="listitem" has-link><a href="register">{{ Auth::user()->name }}</a></b-dropdown-item>
+                                <b-dropdown-item aria-role="listitem" has-link><a href="/user">{{ Auth::user()->name }}</a></b-dropdown-item>
                                 <b-dropdown-item aria-role="listitem" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Logout</b-dropdown-item>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;" ref="logoutfrm">
