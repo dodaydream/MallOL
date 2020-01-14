@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Route::get('/product/{product}',                               'ProductController@show')->name('show-prod');
 
+Route::get('/products',                               'ProductController@index')->name('list-prod');
+
 
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {

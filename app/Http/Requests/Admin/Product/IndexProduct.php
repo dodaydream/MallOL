@@ -14,7 +14,8 @@ class IndexProduct extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.product.index');
+        // return Gate::allows('admin.product.index');
+        return true;
     }
 
     /**

@@ -12,6 +12,7 @@ import Vuex from 'vuex'
 import store from './store'
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
+import VueCookie from 'vue-cookie';
 
 /**
  * The following block of code may be used to automatically register your
@@ -26,9 +27,11 @@ import 'buefy/dist/buefy.css'
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('product', require('./components/Product.vue').default);
+Vue.component('product-listing', require('./components/ProductListing.js').default);
 Vue.component('cart', require('./components/Cart.vue').default);
 Vue.use(Buefy)
 Vue.use(Vuex)
+Vue.use(VueCookie)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
