@@ -80552,7 +80552,9 @@ var render = function() {
         "footer",
         { staticClass: "modal-card-foot" },
         [
-          _c("b-button", { on: { click: _vm.clickMe } }, [_vm._v("View Bag")]),
+          _c("a", { staticClass: "button", attrs: { href: "/carts" } }, [
+            _vm._v("View Bag")
+          ]),
           _vm._v(" "),
           _c(
             "b-button",
@@ -94238,6 +94240,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/admin/cart/Listing.js":
+/*!********************************************!*\
+  !*** ./resources/js/admin/cart/Listing.js ***!
+  \********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _app_components_Listing_AppListing__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../app-components/Listing/AppListing */ "./resources/js/admin/app-components/Listing/AppListing.js");
+
+Vue.component('cart-listing', {
+  mixins: [_app_components_Listing_AppListing__WEBPACK_IMPORTED_MODULE_0__["default"]]
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -94280,6 +94299,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('product', __webpack_require__(/*! ./components/Product.vue */ "./resources/js/components/Product.vue")["default"]);
 Vue.component('product-listing', __webpack_require__(/*! ./components/ProductListing.js */ "./resources/js/components/ProductListing.js")["default"]);
+Vue.component('cart-listing', __webpack_require__(/*! ./admin/cart/Listing.js */ "./resources/js/admin/cart/Listing.js")["default"]);
 Vue.component('cart', __webpack_require__(/*! ./components/Cart.vue */ "./resources/js/components/Cart.vue")["default"]);
 Vue.use(buefy__WEBPACK_IMPORTED_MODULE_2__["default"]);
 Vue.use(vuex__WEBPACK_IMPORTED_MODULE_0__["default"]);
@@ -94837,9 +94857,9 @@ var debug = "development" !== 'production';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /media/stanley/develop/MPI/MallOL/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /media/stanley/develop/MPI/MallOL/resources/sass/app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! /media/stanley/develop/MPI/MallOL/resources/sass/admin/admin.scss */"./resources/sass/admin/admin.scss");
+__webpack_require__(/*! /Users/stanley/Dev/mallol/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /Users/stanley/Dev/mallol/resources/sass/app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! /Users/stanley/Dev/mallol/resources/sass/admin/admin.scss */"./resources/sass/admin/admin.scss");
 
 
 /***/ })

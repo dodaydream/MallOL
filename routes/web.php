@@ -108,3 +108,13 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::prefix('carts')->name('carts/')->group(static function() {
+    Route::get('/',                                             'CartsController@index')->name('index');
+    Route::get('/create',                                       'CartsController@create')->name('create');
+    Route::post('/',                                            'CartsController@store')->name('store');
+    Route::get('/{cart}/edit',                                  'CartsController@edit')->name('edit');
+    Route::post('/bulk-destroy',                                'CartsController@bulkDestroy')->name('bulk-destroy');
+    Route::post('/{cart}',                                      'CartsController@update')->name('update');
+    Route::delete('/{cart}',                                    'CartsController@destroy')->name('destroy');
+});

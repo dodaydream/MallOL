@@ -36,7 +36,7 @@
         </section>
 
         <footer class="modal-card-foot">
-            <b-button @click="clickMe">View Bag</b-button>
+            <a class="button" href="/carts">View Bag</a>
             <b-button @click="clickMe" type="is-primary">Go to Checkout</b-button>
         </footer>
     </div>

@@ -28,6 +28,7 @@ import VueCookie from 'vue-cookie';
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('product', require('./components/Product.vue').default);
 Vue.component('product-listing', require('./components/ProductListing.js').default);
+Vue.component('cart-listing', require('./admin/cart/Listing.js').default);
 Vue.component('cart', require('./components/Cart.vue').default);
 Vue.use(Buefy)
 Vue.use(Vuex)

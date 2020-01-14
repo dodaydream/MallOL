@@ -64,3 +64,14 @@ $factory->define(App\Models\Inventory::class, static function (Faker\Generator $
         
     ];
 });
+/** @var  \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Models\Cart::class, static function (Faker\Generator $faker) {
+    return [
+        'sku' => $faker->sentence,
+        'inventory_id' => $faker->sentence,
+        'user_id' => $faker->sentence,
+        'qty' => $faker->sentence,
+        
+        
+    ];
+});

@@ -107,5 +107,24 @@ return [
         ],
     ],
 
+    'cart' => [
+        'title' => 'Carts',
+
+        'actions' => [
+            'index' => 'Carts',
+            'create' => 'New Cart',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'sku' => 'Sku',
+            'inventory_id' => 'Inventory',
+            'user_id' => 'User',
+            'qty' => 'Qty',
+            
+        ],
+    ],
+
     // Do not delete me :) I'm used for auto-generation
 ];
