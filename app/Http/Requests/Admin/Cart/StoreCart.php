@@ -15,7 +15,7 @@ class StoreCart extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.cart.create');
+        return true;
     }
 
     /**
@@ -27,10 +27,8 @@ class StoreCart extends FormRequest
     {
         return [
             'sku' => ['nullable', 'string'],
-            'inventory_id' => ['required', 'string'],
-            'user_id' => ['required', 'string'],
-            'qty' => ['nullable', 'string'],
-            
+            'inventory_id' => ['required', 'integer'],
+            'qty' => ['nullable', 'integer'],
         ];
     }
 

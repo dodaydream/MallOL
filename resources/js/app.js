@@ -13,6 +13,7 @@ import store from './store'
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 import VueCookie from 'vue-cookie';
+import VModal from 'vue-js-modal'
 
 /**
  * The following block of code may be used to automatically register your
@@ -33,6 +34,7 @@ Vue.component('cart', require('./components/Cart.vue').default);
 Vue.use(Buefy)
 Vue.use(Vuex)
 Vue.use(VueCookie)
+Vue.use(VModal, { dialog: true, dynamic: true, injectModalsContainer: true });
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

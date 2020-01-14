@@ -50,7 +50,11 @@ class CartsController extends Controller
             ['id', 'sku', 'inventory_id', 'user_id', 'qty'],
 
             // set columns to searchIn
-            ['id', 'sku', 'qty']
+            ['id', 'sku', 'qty'],
+
+            function ($query) use ($request) {
+                $query->with('inventory.product');
+            }
         );
 
         if ($request->ajax()) {
@@ -88,6 +92,9 @@ class CartsController extends Controller
     {
         // Sanitize input
         $sanitized = $request->getSanitized();
+        $userId = $request->user()->id;
+
+        $sanitized['user_id'] = $userId;
 
         // Store the Cart
         $cart = Cart::create($sanitized);

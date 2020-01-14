@@ -29,4 +29,8 @@ class Inventory extends Model
     {
         return url('/admin/inventories/'.$this->getKey());
     }
+
+    public function product() {
+        return $this->belongsTo(Product::class);
+    }
 }

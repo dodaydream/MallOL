@@ -54,13 +54,21 @@ const actions = {
   addInventoryToCart({ state, commit }, { product, inventory }) {
     console.log(inventory)
     commit('setCheckoutStatus', null)
+
+
     if (inventory.qty > 0) {
       const cartItem = state.items.find(item => item.id === inventory.id)
       if (!cartItem) {
-        commit('pushInventoryToCart', {
-            id: inventory.id,
-            product: product,
-            inventory: inventory
+        window.axios.post('/carts', {
+          sku: inventory.sku,
+          inventory_id: inventory.id,
+          qty: inventory.qty
+        }).then((data) => {
+          commit('pushInventoryToCart', {
+              id: inventory.id,
+              product: product,
+              inventory: inventory
+          })
         })
       } else {
         commit('incrementItemQuantity', cartItem)

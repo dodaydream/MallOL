@@ -11,7 +11,6 @@ class Cart extends Model
         'inventory_id',
         'user_id',
         'qty',
-    
     ];
     
     
@@ -27,5 +26,9 @@ class Cart extends Model
     public function getResourceUrlAttribute()
     {
         return url('/admin/carts/'.$this->getKey());
+    }
+
+    public function inventory() {
+        return $this->belongsTo(Inventory::class);
     }
 }
