@@ -16,6 +16,7 @@
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-badge@3.0.1/dist/css/bulma-badge.min.css">
 
         <!-- Styles -->
         <!--link href="{{ asset('css/app.css') }}" rel="stylesheet"-->
@@ -88,28 +89,28 @@
                     </b-navbar-item>
                     <b-navbar-item tag="div">
                         <div class="buttons">
+@guest
+
+<a class="button" href="/login">Log in</a>
+<b-button>Register</b-button>
+@else
                             <b-dropdown aria-role="list" hoverable position="is-bottom-left">
-                                <button class="button" slot="trigger">
+                                <button class="button is-white" slot="trigger">
                                     <b-icon icon="account"></b-icon>
                                 </button>
 
-                        @guest
-                                <b-dropdown-item aria-role="listitem" has-link><a href="/login">Log in</a></b-dropdown-item>
-                                <b-dropdown-item aria-role="listitem" has-link><a href="/register">Register</a></b-dropdown-item>
-                        @else
                                 <b-dropdown-item aria-role="listitem" has-link><a href="/user">{{ Auth::user()->name }}</a></b-dropdown-item>
                                 <b-dropdown-item aria-role="listitem" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Logout</b-dropdown-item>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;" ref="logoutfrm">
                                         @csrf
                                     </form>
-                        @endguest
 
                                 <b-dropdown-item aria-role="listitem">Track my orders</b-dropdown-item>
                             </b-dropdown>
 
                             <b-dropdown aria-role="list" hoverable position="is-bottom-left" class="custom">
-                                <button class="button" slot="trigger">
+                                <button class="button has-badge-rounded is-white has-badge-danger" slot="trigger" data-badge="{{ Auth::user()->unreadNotifications()->count() }}">
                                     <b-icon icon="bell"></b-icon>
                                 </button>
 
@@ -140,9 +141,8 @@
                             </b-dropdown>
 
                             <b-dropdown aria-role="list" hoverable position="is-bottom-left" class="custom">
-                                <button class="button" slot="trigger">
+                                <button class="button is-white has-badge-rounded" data-badge="8" slot="trigger">
                                     <b-icon icon="cart"></b-icon>
-                                    <b-tag>1</b-tag>
                                 </button>
 
                                 <b-dropdown-item
@@ -154,6 +154,7 @@
                                     <cart />
                                                                                          </b-dropdown-item>
                             </b-dropdown>
+@endguest
                         </div>
                     </b-navbar-item>
                 </template>
