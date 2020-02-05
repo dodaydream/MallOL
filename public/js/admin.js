@@ -111743,8 +111743,31 @@ Vue.component('cart-form', {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_components_Listing_AppListing__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../app-components/Listing/AppListing */ "./resources/js/admin/app-components/Listing/AppListing.js");
 
+
+var _lodash = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+
 Vue.component('cart-listing', {
-  mixins: [_app_components_Listing_AppListing__WEBPACK_IMPORTED_MODULE_0__["default"]]
+  mixins: [_app_components_Listing_AppListing__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  methods: {
+    checkout: function checkout() {
+      var itemsToCheckout = (0, _lodash.keys)((0, _lodash.pickBy)(this.bulkItems));
+      var form = document.createElement('form');
+      form.style.visibility = 'hidden';
+      form.method = 'POST';
+      form.action = '/checkout';
+      var input = document.createElement('input');
+      input.name = 'data';
+      input.value = JSON.stringify(itemsToCheckout);
+      var inputCsrf = document.createElement('input'); // csrf protection
+
+      inputCsrf.name = '_token';
+      inputCsrf.value = $('meta[name="csrf-token"]').attr('content');
+      form.appendChild(input);
+      form.appendChild(inputCsrf);
+      document.body.appendChild(form);
+      form.submit();
+    }
+  }
 });
 
 /***/ }),

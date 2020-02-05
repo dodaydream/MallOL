@@ -106,7 +106,7 @@
       </div>
     </div>
   </div>
-                <b-button type="is-primary">Checkout</b-button>
+                <b-button type="is-primary" @click="checkout">Checkout</b-button>
 </div>
 </cart-listing>
 

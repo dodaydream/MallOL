@@ -26,7 +26,7 @@ class CreateCartsTable extends Migration
             $table->string('sku', 45)->nullable()->default(null);
             $table->unsignedBigInteger('inventory_id');
             $table->unsignedBigInteger('user_id');
-            $table->string('qty', 45)->nullable()->default(null);
+            $table->unsignedBigInteger('qty')->default(1);
 
             $table->index(["user_id"], 'fk_carts_users1_idx');
 

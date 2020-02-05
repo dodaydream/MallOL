@@ -118,3 +118,5 @@ Route::prefix('carts')->name('carts/')->group(static function() {
     Route::post('/{cart}',                                      'CartsController@update')->name('update');
     Route::delete('/{cart}',                                    'CartsController@destroy')->name('destroy');
 });
+
+Route::post('/checkout', 'CheckoutController@checkout')->name('checkout');
