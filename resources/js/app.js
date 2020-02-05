@@ -14,6 +14,8 @@ import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 import VueCookie from 'vue-cookie';
 import VModal from 'vue-js-modal'
+import VeeValidate from 'vee-validate';
+import Notifications from 'vue-notification';
 
 /**
  * The following block of code may be used to automatically register your
@@ -35,6 +37,8 @@ Vue.use(Buefy)
 Vue.use(Vuex)
 Vue.use(VueCookie)
 Vue.use(VModal, { dialog: true, dynamic: true, injectModalsContainer: true });
+Vue.use(VeeValidate, {strict: true});
+Vue.use(Notifications);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

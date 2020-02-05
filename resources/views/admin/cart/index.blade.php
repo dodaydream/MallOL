@@ -6,7 +6,7 @@
 
 <cart-listing
     :data="{{ $data->toJson() }}"
-    :url="'{{ url('admin/carts') }}'"
+    :url="'{{ url('carts') }}'"
     inline-template>
 
 <div>
@@ -44,10 +44,10 @@
           </tr>
           <tr v-show="(clickedBulkItemsCount > 0) || isClickedAll">
               <td class="bg-bulk-info d-table-cell text-center" colspan="7">
-                          <b-notification class="align-middle font-weight-light text-dark" :closable="false">{{ trans('brackets/admin-ui::admin.listing.selected_items') }} @{{ clickedBulkItemsCount }}.  <a href="#" class="text-primary" @click="onBulkItemsClickedAll('/admin/carts')" v-if="(clickedBulkItemsCount < pagination.state.total)"> <i class="fa" :class="bulkCheckingAllLoader ? 'fa-spinner' : ''"></i> {{ trans('brackets/admin-ui::admin.listing.check_all_items') }} @{{ pagination.state.total }}</a> <span class="text-primary">|</span> <a
+                          <b-notification class="align-middle font-weight-light text-dark" :closable="false">{{ trans('brackets/admin-ui::admin.listing.selected_items') }} @{{ clickedBulkItemsCount }}.  <a href="#" class="text-primary" @click="onBulkItemsClickedAll('/carts')" v-if="(clickedBulkItemsCount < pagination.state.total)"> <i class="fa" :class="bulkCheckingAllLoader ? 'fa-spinner' : ''"></i> {{ trans('brackets/admin-ui::admin.listing.check_all_items') }} @{{ pagination.state.total }}</a> <span class="text-primary">|</span> <a
                                       href="#" class="text-primary" @click="onBulkItemsClickedAllUncheck()">{{ trans('brackets/admin-ui::admin.listing.uncheck_all_items') }}</a> 
 
-            <b-button type="is-danger" @click="bulkDelete('/admin/carts/bulk-destroy')">{{ trans('brackets/admin-ui::admin.btn.delete') }}</b-button>
+            <b-button type="is-danger" @click="bulkDelete('/carts/bulk-destroy')">{{ trans('brackets/admin-ui::admin.btn.delete') }}</b-button>
  </b-notification>
               </td>
           </tr>

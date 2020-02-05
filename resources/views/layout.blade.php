@@ -68,7 +68,7 @@
         <div id="app">
             <b-navbar class="container" fixed-top>
                 <template slot="brand">
-                    <b-navbar-item tag="router-link" :to="{ path: '/' }">
+                    <b-navbar-item tag="a" :to="{ path: '/' }">
                         <b-icon icon="shopping"></b-icon>
                         <span>{{ config('app.name', 'Laravel') }}</span>
                     </b-navbar-item>
@@ -83,7 +83,7 @@
                                 type="search"
                                 icon="magnify"
                                 icon-clickable
-                                @icon-click="searchIconClick">
+                                >
                             </b-input>
                         </b-field>
                     </b-navbar-item>
@@ -141,7 +141,7 @@
                             </b-dropdown>
 
                             <b-dropdown aria-role="list" hoverable position="is-bottom-left" class="custom">
-                                <button class="button is-white has-badge-rounded" data-badge="8" slot="trigger">
+                                <button class="button is-white has-badge-rounded" data-badge="{{ Auth::user()->carts()->count() }}" slot="trigger">
                                     <b-icon icon="cart"></b-icon>
                                 </button>
 
@@ -161,6 +161,12 @@
             </b-navbar>
 
             <div class="container">
+                <div class="modals">
+                    <v-dialog/>
+                </div>
+                <div>
+                    <notifications position="bottom right" :duration="2000" />
+                </div>
             @yield('content')
             </div>
 

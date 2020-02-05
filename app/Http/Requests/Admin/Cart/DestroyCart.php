@@ -14,7 +14,7 @@ class DestroyCart extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.cart.delete', $this->cart);
+        return true;
     }
 
     /**

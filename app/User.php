@@ -45,4 +45,9 @@ class User extends Authenticatable
     {
         return url('/admin/users/'.$this->getKey());
     }
+
+    public function carts()
+    {
+        return $this->hasMany(\App\Models\Cart::class);
+    }
 }

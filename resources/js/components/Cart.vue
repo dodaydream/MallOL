@@ -6,7 +6,7 @@
 
         <section class="modal-card-body">
             <template v-if="products.length > 0">
-                <article class="media" v-for="item in products">
+                <article class="media" v-for="item in products" :key="item.id">
                   <figure class="media-left">
                     <p class="image is-64x64">
                       <img src="https://bulma.io/images/placeholders/64x64.png">
@@ -37,7 +37,7 @@
 
         <footer class="modal-card-foot">
             <a class="button" href="/carts">View Bag</a>
-            <b-button @click="clickMe" type="is-primary">Go to Checkout</b-button>
+            <b-button @click="checkout" type="is-primary">Go to Checkout</b-button>
         </footer>
     </div>
 </template>
@@ -58,6 +58,9 @@ export default {
         // FIXME: not working
         changeQty (value, inventoryId) {
             this.changeQuantity({ id: item.inventory.id, qty: value })
+        },
+        checkout () {
+        // TODO
         }
     }
 }

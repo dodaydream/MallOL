@@ -25,7 +25,7 @@ class Cart extends Model
 
     public function getResourceUrlAttribute()
     {
-        return url('/admin/carts/'.$this->getKey());
+        return url('/carts/'.$this->getKey());
     }
 
     public function inventory() {

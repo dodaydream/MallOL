@@ -62,7 +62,7 @@ const actions = {
         window.axios.post('/carts', {
           sku: inventory.sku,
           inventory_id: inventory.id,
-          qty: inventory.qty
+          qty: 1
         }).then((data) => {
           commit('pushInventoryToCart', {
               id: inventory.id,
@@ -94,8 +94,10 @@ const mutations = {
   },
 
   setItemQuantity (state, { id, qty }) {
-    const cartItem = state.items.find(item => item.id === id)
-    cartItem.quantity = qty
+    const index = state.items.findIndex(item => item.id === id)
+    const newItem = Object.assign({}, state.items[index])
+    newItem.quantity = qty
+    state.items.splice(index, 1, newItem)
   },
 
   setCartItems (state, { items }) {

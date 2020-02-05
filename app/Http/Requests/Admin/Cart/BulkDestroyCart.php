@@ -14,7 +14,8 @@ class BulkDestroyCart extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.cart.bulk-delete');
+        return true;
+        // return Gate::allows('admin.cart.bulk-delete');
     }
 
     /**
