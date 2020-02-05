@@ -75,3 +75,20 @@ $factory->define(App\Models\Cart::class, static function (Faker\Generator $faker
         
     ];
 });
+/** @var  \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Models\User::class, static function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->firstName,
+        'email' => $faker->email,
+        'password' => bcrypt($faker->password),
+        'remember_token' => null,
+        'activated' => $faker->boolean(),
+        'forbidden' => $faker->boolean(),
+        'language' => $faker->sentence,
+        'deleted_at' => null,
+        'created_at' => $faker->dateTime,
+        'updated_at' => $faker->dateTime,
+        
+        
+    ];
+});

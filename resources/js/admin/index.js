@@ -6,3 +6,4 @@ import './category';
 import './brand';
 import './inventory';
 import './cart';
+import './user';

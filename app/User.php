@@ -36,4 +36,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $appends = ['resource_url'];
+
+    /* ************************ ACCESSOR ************************* */
+
+    public function getResourceUrlAttribute()
+    {
+        return url('/admin/users/'.$this->getKey());
+    }
 }
