@@ -22,6 +22,19 @@ const getters = {
 
 // actions
 const actions = {
+  retrieveCartItem ({ commit, state }) {
+    // FIXME: this workaround may not be perfect
+    window.axios.get('http://0.0.0.0:3000/carts?per_page=1000&page=1&orderBy=id&orderDirection=asc').then(({data}) => {
+      data.data.data.forEach(item => {
+          commit('pushInventoryToCart', {
+              id: item.id,
+              product: item.inventory.product,
+              inventory: item.inventory,
+              qty: item.qty
+          })
+      })
+    })
+  },
   checkout ({ commit, state }, products) {
     const savedCartItems = [...state.items]
     commit('setCheckoutStatus', null)
@@ -38,15 +51,19 @@ const actions = {
     )
   },
 
-  changeQuantity({ state, commit }, { inventoryId, qty }) {
-    const cartItem = state.items.find(item => item.id === inventoryId)
+  changeQuantity({ state, commit }, { id, qty }) {
+    const cartItem = state.items.find(item => item.id === id)
 
     console.log(cartItem)
 
     if (cartItem) {
-      commit('setItemQuantity', {
-        id: cartItem.id,
+      window.axios.post(`/carts/${cartItem.id}`, {
         qty: qty
+      }).then(({data}) => {
+        commit('setItemQuantity', {
+          id: cartItem.id,
+          qty: qty
+        })
       })
     }
   },
@@ -57,21 +74,26 @@ const actions = {
 
 
     if (inventory.qty > 0) {
-      const cartItem = state.items.find(item => item.id === inventory.id)
+      const cartItem = state.items.find(item => item.inventory.id === inventory.id)
       if (!cartItem) {
         window.axios.post('/carts', {
           sku: inventory.sku,
           inventory_id: inventory.id,
           qty: 1
-        }).then((data) => {
+        }).then(({data}) => {
           commit('pushInventoryToCart', {
-              id: inventory.id,
-              product: product,
-              inventory: inventory
+              id: data.id,
+              product: data.product,
+              inventory: data.inventory,
+              qty: data.qty
           })
         })
       } else {
-        commit('incrementItemQuantity', cartItem)
+        window.axios.post(`/carts/${cartItem.id}`, {
+          qty: cartItem.quantity + 1
+        }).then(({data}) => {
+          commit('incrementItemQuantity', cartItem)
+        })
       }
     }
   }
@@ -79,12 +101,12 @@ const actions = {
 
 // mutations
 const mutations = {
-  pushInventoryToCart (state, { id, product, inventory }) {
+  pushInventoryToCart (state, { id, product, inventory, qty }) {
     state.items.push({
       id,
       product,
       inventory,
-      quantity: 1
+      quantity: qty
     })
   },
 

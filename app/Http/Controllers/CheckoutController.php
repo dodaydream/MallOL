@@ -39,13 +39,15 @@ class CheckoutController extends Controller
     {
         // TODO: filter request
         // create and AdminListing instance for a specific model and
-        $input = json_decode($request->input('data'), true);
+        $input = json_decode($request->input('ids'), true);
 
-        $data = Cart::whereIn('id', $input);
+        $ids = array_map(
+          function($value) { return (int) $value; },
+          $input
+        ); 
 
-        $data->with('inventory.product')->get();
-
-        return $data;
+        $data = Cart::whereIn('id', $ids)
+          ->with('inventory.product')->get();
 
         if ($request->ajax()) {
             return ['data' => $data];

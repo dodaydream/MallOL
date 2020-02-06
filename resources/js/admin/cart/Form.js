@@ -9,9 +9,7 @@ Vue.component('cart-form', {
                 inventory_id:  '' ,
                 user_id:  '' ,
                 qty:  '' ,
-                
             }
         }
     }
-
 });

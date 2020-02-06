@@ -13,7 +13,6 @@
           </tr>
         </thead>
       <tbody>
-{{ json_encode($data) }}
 @foreach ($data as $item)
         <tr>
                                 <td>
@@ -33,8 +32,8 @@
   </div>
   </div>
                                 </td>
-                                <td><b-numberinput v-model="item.qty"></b-numberinput></td>
-                                <td>MOP$ {{ $item->inventory->product.price}}</td>
+                                <td>{{ $item->qty }}</td>
+                                <td>MOP$ {{ $item->inventory->product->price}}</td>
                                 <td>MOP$ {{ number_format($item->qty * $item->inventory->product->price, 2) }}</td>
                                 
                             </tr>

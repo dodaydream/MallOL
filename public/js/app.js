@@ -1983,6 +1983,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('cart', {
@@ -1990,10 +1993,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     totalPrice: 'cartTotalPrice'
   })),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('cart', ['changeQuantity']), {
-    // FIXME: not working
-    changeQty: function changeQty(value, inventoryId) {
+    changeQty: function changeQty(value, id) {
       this.changeQuantity({
-        id: item.inventory.id,
+        id: id,
         qty: value
       });
     },
@@ -91646,18 +91648,17 @@ var render = function() {
                       { staticClass: "level is-mobile" },
                       [
                         _c("b-numberinput", {
-                          attrs: { size: "is-small" },
+                          attrs: {
+                            size: "is-small",
+                            min: 1,
+                            max: 999,
+                            "controls-position": "compact",
+                            value: item.quantity
+                          },
                           on: {
                             input: function($event) {
                               return _vm.changeQty($event, item.id)
                             }
-                          },
-                          model: {
-                            value: item.quantity,
-                            callback: function($$v) {
-                              _vm.$set(item, "quantity", $$v)
-                            },
-                            expression: "item.quantity"
                           }
                         })
                       ],
@@ -106545,13 +106546,27 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_components_Listing_AppListing__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../app-components/Listing/AppListing */ "./resources/js/admin/app-components/Listing/AppListing.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 var _lodash = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 Vue.component('cart-listing', {
   mixins: [_app_components_Listing_AppListing__WEBPACK_IMPORTED_MODULE_0__["default"]],
-  methods: {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('cart', ['changeQuantity']), {
+    changeQty: function changeQty(value, id) {
+      this.changeQuantity({
+        id: id,
+        qty: value
+      });
+    },
     checkout: function checkout() {
       var itemsToCheckout = (0, _lodash.keys)((0, _lodash.pickBy)(this.bulkItems));
       var form = document.createElement('form');
@@ -106559,7 +106574,7 @@ Vue.component('cart-listing', {
       form.method = 'POST';
       form.action = '/checkout';
       var input = document.createElement('input');
-      input.name = 'data';
+      input.name = 'ids';
       input.value = JSON.stringify(itemsToCheckout);
       var inputCsrf = document.createElement('input'); // csrf protection
 
@@ -106570,7 +106585,7 @@ Vue.component('cart-listing', {
       document.body.appendChild(form);
       form.submit();
     }
-  }
+  })
 });
 
 /***/ }),
@@ -106596,6 +106611,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
 /* harmony import */ var vue_notification__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-notification */ "./node_modules/vue-notification/dist/index.js");
 /* harmony import */ var vue_notification__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(vue_notification__WEBPACK_IMPORTED_MODULE_7__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -106645,9 +106666,14 @@ Vue.use(vue_notification__WEBPACK_IMPORTED_MODULE_7___default.a);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
 var app = new Vue({
   el: '#app',
-  store: _store__WEBPACK_IMPORTED_MODULE_1__["default"]
+  store: _store__WEBPACK_IMPORTED_MODULE_1__["default"],
+  created: function created() {
+    this.retrieveCartItem();
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('cart', ['retrieveCartItem']))
 });
 
 /***/ }),
@@ -107027,9 +107053,25 @@ var getters = {
 }; // actions
 
 var actions = {
-  checkout: function checkout(_ref, products) {
+  retrieveCartItem: function retrieveCartItem(_ref) {
     var commit = _ref.commit,
         state = _ref.state;
+    // FIXME: this workaround may not be perfect
+    window.axios.get('http://0.0.0.0:3000/carts?per_page=1000&page=1&orderBy=id&orderDirection=asc').then(function (_ref2) {
+      var data = _ref2.data;
+      data.data.data.forEach(function (item) {
+        commit('pushInventoryToCart', {
+          id: item.id,
+          product: item.inventory.product,
+          inventory: item.inventory,
+          qty: item.qty
+        });
+      });
+    });
+  },
+  checkout: function checkout(_ref3, products) {
+    var commit = _ref3.commit,
+        state = _ref3.state;
 
     var savedCartItems = _toConsumableArray(state.items);
 
@@ -107048,34 +107090,39 @@ var actions = {
       });
     });
   },
-  changeQuantity: function changeQuantity(_ref2, _ref3) {
-    var state = _ref2.state,
-        commit = _ref2.commit;
-    var inventoryId = _ref3.inventoryId,
-        qty = _ref3.qty;
+  changeQuantity: function changeQuantity(_ref4, _ref5) {
+    var state = _ref4.state,
+        commit = _ref4.commit;
+    var id = _ref5.id,
+        qty = _ref5.qty;
     var cartItem = state.items.find(function (item) {
-      return item.id === inventoryId;
+      return item.id === id;
     });
     console.log(cartItem);
 
     if (cartItem) {
-      commit('setItemQuantity', {
-        id: cartItem.id,
+      window.axios.post("/carts/".concat(cartItem.id), {
         qty: qty
+      }).then(function (_ref6) {
+        var data = _ref6.data;
+        commit('setItemQuantity', {
+          id: cartItem.id,
+          qty: qty
+        });
       });
     }
   },
-  addInventoryToCart: function addInventoryToCart(_ref4, _ref5) {
-    var state = _ref4.state,
-        commit = _ref4.commit;
-    var product = _ref5.product,
-        inventory = _ref5.inventory;
+  addInventoryToCart: function addInventoryToCart(_ref7, _ref8) {
+    var state = _ref7.state,
+        commit = _ref7.commit;
+    var product = _ref8.product,
+        inventory = _ref8.inventory;
     console.log(inventory);
     commit('setCheckoutStatus', null);
 
     if (inventory.qty > 0) {
       var cartItem = state.items.find(function (item) {
-        return item.id === inventory.id;
+        return item.inventory.id === inventory.id;
       });
 
       if (!cartItem) {
@@ -107083,42 +107130,50 @@ var actions = {
           sku: inventory.sku,
           inventory_id: inventory.id,
           qty: 1
-        }).then(function (data) {
+        }).then(function (_ref9) {
+          var data = _ref9.data;
           commit('pushInventoryToCart', {
-            id: inventory.id,
-            product: product,
-            inventory: inventory
+            id: data.id,
+            product: data.product,
+            inventory: data.inventory,
+            qty: data.qty
           });
         });
       } else {
-        commit('incrementItemQuantity', cartItem);
+        window.axios.post("/carts/".concat(cartItem.id), {
+          qty: cartItem.quantity + 1
+        }).then(function (_ref10) {
+          var data = _ref10.data;
+          commit('incrementItemQuantity', cartItem);
+        });
       }
     }
   }
 }; // mutations
 
 var mutations = {
-  pushInventoryToCart: function pushInventoryToCart(state, _ref6) {
-    var id = _ref6.id,
-        product = _ref6.product,
-        inventory = _ref6.inventory;
+  pushInventoryToCart: function pushInventoryToCart(state, _ref11) {
+    var id = _ref11.id,
+        product = _ref11.product,
+        inventory = _ref11.inventory,
+        qty = _ref11.qty;
     state.items.push({
       id: id,
       product: product,
       inventory: inventory,
-      quantity: 1
+      quantity: qty
     });
   },
-  incrementItemQuantity: function incrementItemQuantity(state, _ref7) {
-    var id = _ref7.id;
+  incrementItemQuantity: function incrementItemQuantity(state, _ref12) {
+    var id = _ref12.id;
     var cartItem = state.items.find(function (item) {
       return item.id === id;
     });
     cartItem.quantity++;
   },
-  setItemQuantity: function setItemQuantity(state, _ref8) {
-    var id = _ref8.id,
-        qty = _ref8.qty;
+  setItemQuantity: function setItemQuantity(state, _ref13) {
+    var id = _ref13.id,
+        qty = _ref13.qty;
     var index = state.items.findIndex(function (item) {
       return item.id === id;
     });
@@ -107126,8 +107181,8 @@ var mutations = {
     newItem.quantity = qty;
     state.items.splice(index, 1, newItem);
   },
-  setCartItems: function setCartItems(state, _ref9) {
-    var items = _ref9.items;
+  setCartItems: function setCartItems(state, _ref14) {
+    var items = _ref14.items;
     state.items = items;
   },
   setCheckoutStatus: function setCheckoutStatus(state, status) {

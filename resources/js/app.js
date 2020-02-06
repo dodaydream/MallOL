@@ -46,7 +46,17 @@ Vue.use(Notifications);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+import { mapActions } from 'vuex'
+
 const app = new Vue({
     el: '#app',
-    store
+    store,
+    created () {
+        this.retrieveCartItem()
+    },
+    methods: {
+        ...mapActions('cart', [
+            'retrieveCartItem'
+        ])
+    }
 });

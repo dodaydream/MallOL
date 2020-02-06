@@ -42,7 +42,10 @@ class CartsController extends Controller
     public function index(IndexCart $request)
     {
         // create and AdminListing instance for a specific model and
-        $data = AdminListing::create(Cart::class)->processRequestAndGet(
+        $data = AdminListing::create(Cart::class)
+            ->modifyQuery(function ($query) use ($request) {
+                $query->where('user_id', $request->user()->id);
+            })->processRequestAndGet(
             // pass the request with params
             $request,
 
@@ -100,10 +103,8 @@ class CartsController extends Controller
         $cart = Cart::create($sanitized);
 
         if ($request->ajax()) {
-            return ['redirect' => url('admin/carts'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];
+            return $cart; 
         }
-
-        return redirect('admin/carts');
     }
 
     /**

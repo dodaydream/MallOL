@@ -22,7 +22,10 @@
                     </div>
                     <nav class="level is-mobile">
                         <b-numberinput size="is-small" 
-                            v-model="item.quantity"
+                            :min="1"
+                            :max="999"
+                            controls-position="compact" 
+                            :value="item.quantity"
                             @input="changeQty($event, item.id)">
                         </b-numberinput>
                     </nav>
@@ -55,9 +58,8 @@ export default {
         ...mapActions('cart', [
             'changeQuantity'
         ]),
-        // FIXME: not working
-        changeQty (value, inventoryId) {
-            this.changeQuantity({ id: item.inventory.id, qty: value })
+        changeQty (value, id) {
+            this.changeQuantity({ id: id, qty: value })
         },
         checkout () {
         // TODO

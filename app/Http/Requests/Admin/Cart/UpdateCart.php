@@ -27,10 +27,7 @@ class UpdateCart extends FormRequest
     public function rules(): array
     {
         return [
-            'sku' => ['nullable', 'string'],
-            'inventory_id' => ['sometimes', 'string'],
-            'user_id' => ['sometimes', 'string'],
-            'qty' => ['nullable', 'string'],
+            'qty' => ['integer'],
             
         ];
     }

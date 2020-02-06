@@ -77,7 +77,12 @@
   </div>
   </div>
                                 </td>
-                                <td><b-numberinput v-model="item.qty"></b-numberinput></td>
+                                <td><b-numberinput :value="item.qty"
+@input="changeQty($event, item.id)"
+                            controls-position="compact" 
+:min="1"
+:max="999"
+></b-numberinput></td>
                                 <td>MOP$ @{{ item.inventory.product.price}}</td>
                                 <td>MOP$ @{{ (item.qty * item.inventory.product.price).toFixed(2) }}</td>
                                 
