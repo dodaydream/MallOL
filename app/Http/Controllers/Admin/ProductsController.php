@@ -47,6 +47,7 @@ class ProductsController extends Controller
             function ($query) use ($request) {
                 $query->with(['category']);
                 $query->with(['brand']);
+                $query->with(['media']);
                 if($request->has('category')){
                     $query->whereIn('category', $request->get('category'));
                 }
@@ -55,6 +56,10 @@ class ProductsController extends Controller
                 }
             }
         );
+
+        foreach ($data as &$item) {
+            $item->thumb_url = $item->getFirstMediaUrl('gallery', 'thumb_200');
+        }
 
         if ($request->ajax()) {
             if ($request->has('bulk')) {

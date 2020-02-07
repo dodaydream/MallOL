@@ -50,10 +50,10 @@
                   </header>
                   <div class="card-content">
                       <ul>
-                        <li v-for="i in 10">
+                        <li v-for="c in {{ $categories }}">
                             <div class="field">
                                 <b-checkbox>
-                                    Category #@{{i}}
+                                    @{{ c.name }}
                                 </b-checkbox>
                             </div>
                         </li>
@@ -72,10 +72,10 @@
                   </header>
                   <div class="card-content">
                       <ul>
-                        <li v-for="i in 10">
+                        <li v-for="b in {{ $brands }}">
                             <div class="field">
                                 <b-checkbox>
-                                    Brand #@{{i}}
+                                    @{{ b.name }}
                                 </b-checkbox>
                             </div>
                         </li>
@@ -102,8 +102,8 @@
                         <a :href="`/product/${item.id}`">
                             <div class="card">
                                 <div class="card-image">
-                                    <figure class="image is-1by1">
-                                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                                    <figure class="image is-2by3">
+                                        <img :src="item.thumb_url" :alt="item.name">
                                     </figure>
                                 </div>
                                 <div class="card-content" style="white-space: nowrap; text-overflow: ellipsis">

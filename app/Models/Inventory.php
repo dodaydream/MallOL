@@ -15,10 +15,10 @@ class Inventory extends Model
     
     ];
     
-    
     protected $dates = [
     
     ];
+
     public $timestamps = false;
     
     protected $appends = ['resource_url'];

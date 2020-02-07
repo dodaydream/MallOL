@@ -54,7 +54,6 @@ class Product extends Model implements HasMedia
         'details',
         'category_id',
         'brand_id',
-    
     ];
     
     

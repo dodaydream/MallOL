@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\Brand;
 use App\Http\Requests\Admin\Product\IndexProduct;
 use Brackets\AdminListing\Facades\AdminListing;
 
@@ -54,11 +56,9 @@ class ProductController extends Controller
             }
         );
 
-        // FIXME
-        //$data = $data->map(function ($item) {
-         //   $item['thumb'] = $item->getFirstMediaUrl('gallery', 'thumb_200');
-          //  return $item;
-        //});
+        foreach ($data as &$item) {
+            $item->thumb_url = $item->getFirstMediaUrl('gallery');
+        }
 
         if ($request->ajax()) {
             if ($request->has('bulk')) {
@@ -66,9 +66,15 @@ class ProductController extends Controller
                     'bulkItems' => $data->pluck('id')
                 ];
             }
-            return ['data' => $data];
+            return [
+                'data' => $data,
+            ];
         }
 
-        return view('product.index', ['data' => $data]);
+        return view('product.index', [
+            'data' => $data,
+            'categories' => Category::orderBy('id')->get()->toJson(),
+            'brands' => Brand::orderBy('id')->get()->toJson()
+        ]);
     }
 }
