@@ -54,13 +54,16 @@ class ScrapeZaloraItem extends Command
 
         $bar = $this->output->createProgressBar($max);
         $bar->setMessage('Starting to scrape items...');
-        $bar->setFormat("%message%\n %current%/%max% [%bar%] %percent:3s%%");
+        $bar->setFormat("%message% \n\n %current%/%max% [<fg=magenta>%bar%</>] <info>%elapsed%</info>");
+        $bar->setBarCharacter('<fg=green>⚬</>');
+        $bar->setEmptyBarCharacter("<fg=red>⚬</>");
+        $bar->setProgressCharacter("<fg=green>➤</>");
         $bar->start();
 
         $this->categories = Category::orderBy('id')->pluck('id');
         $this->brands = Brand::orderBy('id')->get();
 
-        for ($i = $offset; $i <= $max + $offset; $i += 99) {
+        for ($i = $offset; $i < $max + $offset; $i += 99) {
             $zalora = new ZaloraService();
             $response = collect($zalora->items($i));
             $response->each(function ($item) use ($bar) {
@@ -109,8 +112,7 @@ class ScrapeZaloraItem extends Command
                         });
                     });
                 } catch (\Exception $e) {
-                    $bar->setMessage($e->getMessage());
-                    sleep(1);
+                    $bar->setMessage('Error adding product '.$item->meta->id_catalog_config.'.');
                 }
 
                 $bar->advance();
