@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Brackets\AdminListing\Facades\AdminListing;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -53,6 +55,53 @@ class CheckoutController extends Controller
             return ['data' => $data];
         }
 
-        return view('checkout', ['data' => $data]);
+        return view('checkout', ['data' => $data, 'ids' => $ids]);
+    }
+
+    public function checkout_success(Request $request)
+    {
+        $input = json_decode($request->input('ids'), true);
+
+        $ids = array_map(
+          function($value) { return (int) $value; },
+          $input
+        ); 
+
+        $data = Cart::whereIn('id', $ids)
+          ->with('inventory.product')->get();
+        $user_id = $request->user()->id;
+
+        $po_number = \Carbon\Carbon::now()->isoFormat('YYYYMMDDHHmmSSSSSS').str_pad($user_id, 12, "0", STR_PAD_LEFT).rand(1000, 9999);
+
+        // Placehold total_price
+        $order = Order::create([
+            'po_number' => $po_number,
+            'user_id' => $user_id,
+            'total_price' => 0
+        ]);
+
+        $orderId = $order->id;
+
+        $totalPrice = 0;
+        $data->each(function ($item) use ($orderId, $totalPrice){
+            $orderItem = OrderItem::fromCart($item, $orderId);
+            $orderItem->save();
+            $totalPrice += $orderItem->total_price;
+        });
+
+        $order->total_price = $totalPrice;
+        $order->save();
+        // TODO: transaction
+        // TODO: delete from cart, as well as frontend
+
+        if ($request->ajax()) {
+            return ['data' => $data];
+        }
+
+        return view('checkout_success', [
+            'data' => $data,
+            'order' => $order
+        ]);
+
     }
 }

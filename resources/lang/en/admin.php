@@ -147,5 +147,104 @@ return [
         ],
     ],
 
+    'order' => [
+        'title' => 'Order',
+
+        'actions' => [
+            'index' => 'Order',
+            'create' => 'New Order',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            
+        ],
+    ],
+
+    'order-item' => [
+        'title' => 'Orderitems',
+
+        'actions' => [
+            'index' => 'Orderitems',
+            'create' => 'New Orderitem',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            
+        ],
+    ],
+
+    'orderitem' => [
+        'title' => 'Orderitem',
+
+        'actions' => [
+            'index' => 'Orderitem',
+            'create' => 'New Orderitem',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            
+        ],
+    ],
+
+    'order-item' => [
+        'title' => 'Order Item',
+
+        'actions' => [
+            'index' => 'Order Item',
+            'create' => 'New Order Item',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            
+        ],
+    ],
+
+    'order' => [
+        'title' => 'Orders',
+
+        'actions' => [
+            'index' => 'Orders',
+            'create' => 'New Order',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'po_number' => 'Po number',
+            'completed_at' => 'Completed at',
+            'total_price' => 'Total price',
+            'user_id' => 'User',
+            
+        ],
+    ],
+
+    'order-item' => [
+        'title' => 'Order Items',
+
+        'actions' => [
+            'index' => 'Order Items',
+            'create' => 'New Order Item',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'price' => 'Price',
+            'total_price' => 'Total price',
+            'qty' => 'Qty',
+            'inventory_id' => 'Inventory',
+            'order_id' => 'Order',
+            
+        ],
+    ],
+
     // Do not delete me :) I'm used for auto-generation
 ];

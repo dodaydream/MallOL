@@ -1,7 +1,6 @@
 @extends('layout')
 
 @section('content')
-<order :ids="@json($ids)">
 <div class="card">
     <header class="card-header">
         <p class="card-header-title">
@@ -66,5 +65,19 @@
         </table>
 </div>
 </div>
-</order>
+
+<div class="card">
+    <header class="card-header">
+        <p class="card-header-title">
+            Order Details
+        </p>
+    </header>
+    <div class="card-content">
+        <div class="content">
+        <strong>P.O. Number: </strong>{{ $order->po_number }}<br>
+        <strong>Created At: </strong>{{ $order->created_at }}<br>
+        <strong>Sub-total: </strong>MOP$ {{ $order->total_price }}
+        </div>
+    </div>
+</div>
 @endsection
