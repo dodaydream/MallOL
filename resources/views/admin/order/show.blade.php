@@ -1,21 +1,51 @@
 @extends('brackets/admin-ui::admin.layout.default')
 
-@section('title', trans('admin.order.actions.index'))
+@section('title', trans('admin.order.actions.edit', ['name' => $order->id]))
 
 @section('body')
 
-    <order-listing
-        :data="{{ $data->toJson() }}"
-        :url="'{{ url('admin/orders') }}'"
+    <div class="container-xl">
+        <div class="card">
+
+            <order-form
+                :action="'{{ $order->resource_url }}'"
+                :data="{{ $order->toJson() }}"
+                v-cloak
+                inline-template>
+            
+                <form class="form-horizontal form-edit" method="post" @submit.prevent="onSubmit" :action="action" novalidate>
+
+
+                    <div class="card-header">
+                       {{ $order->po_number }} 
+                    </div>
+
+                    <div class="card-body">
+                        User: {{ $order->user->name }}</br>
+                        Ordered At: {{ $order->created_at }}
+        <p></p>
+        <p>John Doe</p>
+        1600 Amphitheatre Parkway
+        <br>
+        Mountain View, California
+        <br>United States
+                    </div>
+                    
+                    
+                </form>
+
+        </order-form>
+    </div>
+
+    <order-item-listing
+        :url="'{{ url('admin/order-items?order_id=') }}{{ $order->id }}'"
         inline-template>
 
         <div class="row">
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> {{ trans('admin.order.actions.index') }}
-                        <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/orders/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.order.actions.create') }}</a>
-                    </div>
+                        <i class="fa fa-align-justify"></i> Items                    </div>
                     <div class="card-body" v-cloak>
                         <div class="card-block">
                             <form @submit.prevent="">
@@ -49,21 +79,22 @@
                                             </label>
                                         </th>
 
-                                        <th is='sortable' :column="'id'">{{ trans('admin.order.columns.id') }}</th>
-                                        <th is='sortable' :column="'po_number'">{{ trans('admin.order.columns.po_number') }}</th>
-                                        <th is='sortable' :column="'completed_at'">{{ trans('admin.order.columns.completed_at') }}</th>
-                                        <th is='sortable' :column="'total_price'">{{ trans('admin.order.columns.total_price') }}</th>
-                                        <th is='sortable' :column="'user_id'">{{ trans('admin.order.columns.user_id') }}</th>
+                                        <th is='sortable' :column="'id'">{{ trans('admin.order-item.columns.id') }}</th>
+                                        <th is='sortable' :column="'price'">{{ trans('admin.order-item.columns.price') }}</th>
+                                        <th is='sortable' :column="'total_price'">{{ trans('admin.order-item.columns.total_price') }}</th>
+                                        <th is='sortable' :column="'qty'">{{ trans('admin.order-item.columns.qty') }}</th>
+                                        <th is='sortable' :column="'inventory_id'">{{ trans('admin.order-item.columns.inventory_id') }}</th>
+                                        <th is='sortable' :column="'order_id'">{{ trans('admin.order-item.columns.order_id') }}</th>
 
                                         <th></th>
                                     </tr>
                                     <tr v-show="(clickedBulkItemsCount > 0) || isClickedAll">
-                                        <td class="bg-bulk-info d-table-cell text-center" colspan="7">
-                                            <span class="align-middle font-weight-light text-dark">{{ trans('brackets/admin-ui::admin.listing.selected_items') }} @{{ clickedBulkItemsCount }}.  <a href="#" class="text-primary" @click="onBulkItemsClickedAll('/admin/orders')" v-if="(clickedBulkItemsCount < pagination.state.total)"> <i class="fa" :class="bulkCheckingAllLoader ? 'fa-spinner' : ''"></i> {{ trans('brackets/admin-ui::admin.listing.check_all_items') }} @{{ pagination.state.total }}</a> <span class="text-primary">|</span> <a
+                                        <td class="bg-bulk-info d-table-cell text-center" colspan="8">
+                                            <span class="align-middle font-weight-light text-dark">{{ trans('brackets/admin-ui::admin.listing.selected_items') }} @{{ clickedBulkItemsCount }}.  <a href="#" class="text-primary" @click="onBulkItemsClickedAll('/admin/order-items')" v-if="(clickedBulkItemsCount < pagination.state.total)"> <i class="fa" :class="bulkCheckingAllLoader ? 'fa-spinner' : ''"></i> {{ trans('brackets/admin-ui::admin.listing.check_all_items') }} @{{ pagination.state.total }}</a> <span class="text-primary">|</span> <a
                                                         href="#" class="text-primary" @click="onBulkItemsClickedAllUncheck()">{{ trans('brackets/admin-ui::admin.listing.uncheck_all_items') }}</a>  </span>
 
                                             <span class="pull-right pr-2">
-                                                <button class="btn btn-sm btn-danger pr-3 pl-3" @click="bulkDelete('/admin/orders/bulk-destroy')">{{ trans('brackets/admin-ui::admin.btn.delete') }}</button>
+                                                <button class="btn btn-sm btn-danger pr-3 pl-3" @click="bulkDelete('/admin/order-items/bulk-destroy')">{{ trans('brackets/admin-ui::admin.btn.delete') }}</button>
                                             </span>
 
                                         </td>
@@ -78,16 +109,14 @@
                                         </td>
 
                                     <td>@{{ item.id }}</td>
-                                        <td>@{{ item.po_number }}</td>
-                                        <td>@{{ item.completed_at }}</td>
+                                        <td>@{{ item.price }}</td>
                                         <td>@{{ item.total_price }}</td>
-                                        <td>@{{ item.user_id }}</td>
+                                        <td>@{{ item.qty }}</td>
+                                        <td>@{{ item.inventory_id }}</td>
+                                        <td>@{{ item.order_id }}</td>
                                         
                                         <td>
                                             <div class="row no-gutters">
-                                                <div class="col-auto">
-                                                    <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url" title="{{ trans('brackets/admin-ui::admin.btn.edit') }}" role="button"><i class="fa fa-file"></i></a>
-                                                </div>
                                                 <div class="col-auto">
                                                     <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url + '/edit'" title="{{ trans('brackets/admin-ui::admin.btn.edit') }}" role="button"><i class="fa fa-edit"></i></a>
                                                 </div>
@@ -113,13 +142,19 @@
                                 <i class="icon-magnifier"></i>
                                 <h3>{{ trans('brackets/admin-ui::admin.index.no_items') }}</h3>
                                 <p>{{ trans('brackets/admin-ui::admin.index.try_changing_items') }}</p>
-                                <a class="btn btn-primary btn-spinner" href="{{ url('admin/orders/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.order.actions.create') }}</a>
+                                <a class="btn btn-primary btn-spinner" href="{{ url('admin/order-items/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.order-item.actions.create') }}</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </order-listing>
+    </order-item-listing>
+
+
+
+        </div>
+    
+</div>
 
 @endsection

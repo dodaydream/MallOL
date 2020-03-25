@@ -100,7 +100,9 @@ class OrdersController extends Controller
     {
         $this->authorize('admin.order.show', $order);
 
-        // TODO your code goes here
+        return view('admin.order.show', [
+            'order' => $order,
+        ]);
     }
 
     /**
@@ -113,7 +115,6 @@ class OrdersController extends Controller
     public function edit(Order $order)
     {
         $this->authorize('admin.order.edit', $order);
-
 
         return view('admin.order.edit', [
             'order' => $order,

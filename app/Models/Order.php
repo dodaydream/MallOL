@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 
 class Order extends Model
 {
@@ -27,5 +28,15 @@ class Order extends Model
     public function getResourceUrlAttribute()
     {
         return url('/admin/orders/'.$this->getKey());
+    }
+
+    public function order_items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

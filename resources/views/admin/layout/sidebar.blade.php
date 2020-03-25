@@ -7,11 +7,8 @@
             <li class="nav-title">{{ trans('brackets/admin-ui::admin.sidebar.category') }}</li>
            <li class="nav-item"><a class="nav-link" href="{{ url('admin/categories') }}"><i class="nav-icon icon-energy"></i> {{ trans('admin.category.title') }}</a></li>
            <li class="nav-item"><a class="nav-link" href="{{ url('admin/brands') }}"><i class="nav-icon icon-star"></i> {{ trans('admin.brand.title') }}</a></li>
-           <li class="nav-item"><a class="nav-link" href="{{ url('admin/carts') }}"><i class="nav-icon icon-energy"></i> {{ trans('admin.cart.title') }}</a></li>
            <li class="nav-item"><a class="nav-link" href="{{ url('admin/users') }}"><i class="nav-icon icon-plane"></i> {{ trans('admin.user.title') }}</a></li>
            <li class="nav-item"><a class="nav-link" href="{{ url('admin/orders') }}"><i class="nav-icon icon-ghost"></i> {{ trans('admin.order.title') }}</a></li>
-           <li class="nav-item"><a class="nav-link" href="{{ url('admin/order-items') }}"><i class="nav-icon icon-umbrella"></i> {{ trans('admin.order-item.title') }}</a></li>
-           <li class="nav-item"><a class="nav-link" href="{{ url('admin/orderitems') }}"><i class="nav-icon icon-compass"></i> {{ trans('admin.orderitem.title') }}</a></li>
            {{-- Do not delete me :) I'm used for auto-generation menu items --}}
 
             <li class="nav-title">{{ trans('brackets/admin-ui::admin.sidebar.settings') }}</li>

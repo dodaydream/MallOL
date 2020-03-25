@@ -40,8 +40,17 @@ class OrderItemsController extends Controller
             ['id', 'price', 'total_price', 'qty', 'inventory_id', 'order_id'],
 
             // set columns to searchIn
-            ['id']
+            ['id'],
+
+            function ($query) use ($request) {
+                if (!$request->has('order_id')) {
+                    abort(500, 'Server error'); 
+                }
+
+                $query->where('order_id', $request->input('order_id'));
+            }
         );
+
 
         if ($request->ajax()) {
             if ($request->has('bulk')) {

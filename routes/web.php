@@ -161,6 +161,7 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
         Route::prefix('orders')->name('orders/')->group(static function() {
             Route::get('/',                                             'OrdersController@index')->name('index');
             Route::get('/create',                                       'OrdersController@create')->name('create');
+            Route::get('/{order}',                                 'OrdersController@show')->name('show');
             Route::post('/',                                            'OrdersController@store')->name('store');
             Route::get('/{order}/edit',                                 'OrdersController@edit')->name('edit');
             Route::post('/bulk-destroy',                                'OrdersController@bulkDestroy')->name('bulk-destroy');
