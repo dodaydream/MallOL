@@ -63,7 +63,7 @@ class OrdersController extends Controller
             $request,
 
             // set columns to query
-            ['po_number', 'completed_at', 'total_price'],
+            ['id', 'po_number', 'completed_at', 'total_price'],
 
             // set columns to searchIn
             ['po_number', 'completed_at'],
@@ -131,6 +131,21 @@ class OrdersController extends Controller
         $this->authorize('admin.order.show', $order);
 
         return view('admin.order.show', [
+            'order' => $order,
+        ]);
+    }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Order $order
+     * @throws AuthorizationException
+     * @return void
+     */
+    public function userShow(Order $order)
+    {
+        return view('admin.order.user-show', [
             'order' => $order,
         ]);
     }

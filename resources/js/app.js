@@ -33,6 +33,8 @@ Vue.component('product', require('./components/Product.vue').default);
 Vue.component('product-listing', require('./components/ProductListing.js').default);
 Vue.component('cart-listing', require('./admin/cart/Listing.js').default);
 Vue.component('order-listing', require('./admin/order/Listing.js').default);
+Vue.component('order-form', require('./admin/order/Form.js').default);
+Vue.component('order-item-listing', require('./admin/order-item/Listing.js').default);
 Vue.component('cart', require('./components/Cart.vue').default);
 Vue.component('order', require('./checkout.vue').default);
 Vue.use(Buefy)

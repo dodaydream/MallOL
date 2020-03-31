@@ -124,6 +124,7 @@ Route::post('/checkout', 'CheckoutController@checkout')->name('checkout');
 Route::post('/checkout_success', 'CheckoutController@checkout_success')->name('checkout_success');
 
 Route::get('/orders',                                             'Admin\OrdersController@indexUser')->name('orders');
+Route::get('/order/{order}',                                 'Admin\OrdersController@userShow')->name('order/show');
 
 
 /* Auto-generated admin routes */
