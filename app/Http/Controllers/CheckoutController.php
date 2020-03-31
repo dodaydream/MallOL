@@ -67,30 +67,40 @@ class CheckoutController extends Controller
           $input
         ); 
 
-        $data = Cart::whereIn('id', $ids)
-          ->with('inventory.product')->get();
-        $user_id = $request->user()->id;
+        DB::beginTransaction();
 
-        $po_number = \Carbon\Carbon::now()->isoFormat('YYYYMMDDHHmmSSSSSS').str_pad($user_id, 12, "0", STR_PAD_LEFT).rand(1000, 9999);
+        try {
+            $data = Cart::whereIn('id', $ids)
+                ->with('inventory.product')->get();
+            $user_id = $request->user()->id;
 
-        // Placehold total_price
-        $order = Order::create([
-            'po_number' => $po_number,
-            'user_id' => $user_id,
-            'total_price' => 0
-        ]);
+            $po_number = \Carbon\Carbon::now()->isoFormat('YYYYMMDDHHmmSSSSSS') . str_pad($user_id, 12, "0", STR_PAD_LEFT) . rand(1000, 9999);
 
-        $orderId = $order->id;
+            // Placehold total_price
+            $order = Order::create([
+                'po_number' => $po_number,
+                'user_id' => $user_id,
+                'total_price' => 0
+            ]);
 
-        $totalPrice = 0;
-        $data->each(function ($item) use ($orderId, $totalPrice){
-            $orderItem = OrderItem::fromCart($item, $orderId);
-            $orderItem->save();
-            $totalPrice += $orderItem->total_price;
-        });
+            $orderId = $order->id;
 
-        $order->total_price = $totalPrice;
-        $order->save();
+            $totalPrice = 0;
+            $data->each(function ($item) use ($orderId, &$totalPrice) {
+                $orderItem = OrderItem::fromCart($item, $orderId);
+                $orderItem->save();
+                $totalPrice += $orderItem->total_price;
+                $item->delete();
+            });
+
+            $order->total_price = $totalPrice;
+            $order->save();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
+
         // TODO: transaction
         // TODO: delete from cart, as well as frontend
 
