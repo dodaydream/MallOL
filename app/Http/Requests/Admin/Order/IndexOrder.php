@@ -14,6 +14,9 @@ class IndexOrder extends FormRequest
      */
     public function authorize(): bool
     {
+        if ($this->is('orders')) {
+            return true;
+        }
         return Gate::allows('admin.order.index');
     }
 

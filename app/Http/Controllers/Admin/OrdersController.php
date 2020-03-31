@@ -55,6 +55,36 @@ class OrdersController extends Controller
         return view('admin.order.index', ['data' => $data]);
     }
 
+    public function indexUser(IndexOrder $request)
+    {
+        // create and AdminListing instance for a specific model and
+        $data = AdminListing::create(Order::class)->processRequestAndGet(
+        // pass the request with params
+            $request,
+
+            // set columns to query
+            ['po_number', 'completed_at', 'total_price'],
+
+            // set columns to searchIn
+            ['po_number', 'completed_at'],
+
+            function ($query) use ($request){
+                $query->where('user_id', $request->user()->id);
+            }
+        );
+
+        if ($request->ajax()) {
+            if ($request->has('bulk')) {
+                return [
+                    'bulkItems' => $data->pluck('id')
+                ];
+            }
+            return ['data' => $data];
+        }
+
+        return view('admin.order.user-index', ['data' => $data]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

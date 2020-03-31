@@ -123,6 +123,8 @@ Route::post('/checkout', 'CheckoutController@checkout')->name('checkout');
 
 Route::post('/checkout_success', 'CheckoutController@checkout_success')->name('checkout_success');
 
+Route::get('/orders',                                             'Admin\OrdersController@indexUser')->name('orders');
+
 
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {

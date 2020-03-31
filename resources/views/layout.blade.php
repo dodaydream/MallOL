@@ -106,7 +106,7 @@
                                         @csrf
                                     </form>
 
-                                <b-dropdown-item aria-role="listitem">Track my orders</b-dropdown-item>
+                                <b-dropdown-item aria-role="listitem" has-link><a href="/orders">Track my orders</a></b-dropdown-item>
                             </b-dropdown>
 
                             <b-dropdown aria-role="list" hoverable position="is-bottom-left" class="custom">
