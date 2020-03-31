@@ -186,10 +186,6 @@ class FillDefaultAdminUserAndPermissions extends Migration
                 if ($userItem === null) {
                     $userId = DB::table($this->userTable)->insertGetId($user);
 
-                    AdminUser::find($userId)->addMedia(storage_path() . '/images/avatar.png')
-                        ->preservingOriginal()
-                        ->toMediaCollection('avatar', 'media');
-
                     foreach ($roles as $role) {
                         $roleItem = DB::table('roles')->where([
                             'name' => $role['name'],

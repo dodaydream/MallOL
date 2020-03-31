@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', trans('admin.cart.actions.index'))
+@section('title', 'Shopping Cart')
 
 @section('content')
 
@@ -12,7 +12,8 @@
 <div>
   <div class="panel is-primary">
     <div class="panel-heading">
-      <i class="fa fa-align-justify"></i> {{ trans('admin.cart.actions.index') }}
+      <i class="fa fa-align-justify"></i> Shopping Cart
+        <div class="float-right">Total: MOP$ @{{ collection.reduce((acc, item) => acc + item.qty * item.inventory.product.price, 0).toFixed(2) }}</div>
     </div>
 
     <div class="panel-block">
@@ -70,7 +71,7 @@
   <div class="media-content">
   <div class="content">
   <p>
-  <strong>@{{item.inventory.product.name}}</strong>       
+      <a :href="`/product/${item.inventory.product.id}`"><strong>@{{item.inventory.product.name}}</strong></a><br>
   <small>@{{ item.inventory.sku }}</small><br>
   <b-tag type="is-primary">@{{ item.inventory.product_attr }}</b-tag> 
   </p>
