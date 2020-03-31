@@ -68,7 +68,7 @@
         <div id="app">
             <b-navbar class="container" fixed-top>
                 <template slot="brand">
-                    <b-navbar-item tag="a" :to="{ path: '/' }">
+                    <b-navbar-item tag="a" href="/">
                         <b-icon icon="shopping"></b-icon>
                         <span>{{ config('app.name', 'Laravel') }}</span>
                     </b-navbar-item>
@@ -92,7 +92,7 @@
 @guest
 
 <a class="button" href="/login">Log in</a>
-<b-button>Register</b-button>
+<a class="button" href="/register">Register</a>
 @else
                             <b-dropdown aria-role="list" hoverable position="is-bottom-left">
                                 <button class="button is-white" slot="trigger">
