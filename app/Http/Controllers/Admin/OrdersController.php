@@ -37,10 +37,10 @@ class OrdersController extends Controller
             $request,
 
             // set columns to query
-            ['id', 'po_number', 'completed_at', 'total_price', 'user_id'],
+            ['id', 'status', 'po_number', 'completed_at', 'total_price', 'user_id'],
 
             // set columns to searchIn
-            ['id', 'po_number', 'completed_at']
+            ['id', 'status', 'po_number', 'completed_at']
         );
 
         if ($request->ajax()) {
@@ -63,10 +63,10 @@ class OrdersController extends Controller
             $request,
 
             // set columns to query
-            ['id', 'po_number', 'completed_at', 'total_price'],
+            ['id', 'status', 'po_number', 'completed_at', 'total_price'],
 
             // set columns to searchIn
-            ['po_number', 'completed_at'],
+            ['status', 'po_number', 'completed_at'],
 
             function ($query) use ($request){
                 $query->where('user_id', $request->user()->id);

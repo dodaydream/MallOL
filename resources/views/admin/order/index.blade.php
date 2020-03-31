@@ -50,6 +50,7 @@
                                         </th>
 
                                         <th is='sortable' :column="'id'">{{ trans('admin.order.columns.id') }}</th>
+                                        <th is='sortable' :column="'status'">Status</th>
                                         <th is='sortable' :column="'po_number'">{{ trans('admin.order.columns.po_number') }}</th>
                                         <th is='sortable' :column="'completed_at'">{{ trans('admin.order.columns.completed_at') }}</th>
                                         <th is='sortable' :column="'total_price'">{{ trans('admin.order.columns.total_price') }}</th>
@@ -78,6 +79,7 @@
                                         </td>
 
                                     <td>@{{ item.id }}</td>
+                                        <td>@{{ item.status }}</td>
                                         <td>@{{ item.po_number }}</td>
                                         <td>@{{ item.completed_at }}</td>
                                         <td>@{{ item.total_price }}</td>

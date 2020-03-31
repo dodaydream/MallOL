@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('po_number', 45);
+            $table->string('status', 15);
             $table->timestamp('created_at')->useCurrent();
             $table->string('completed_at', 45)->nullable()->default(null);
             $table->decimal('total_price', 32, 2);

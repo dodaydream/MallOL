@@ -94,6 +94,7 @@ class CheckoutController extends Controller
             });
 
             $order->total_price = $totalPrice;
+            $order->status = 'pending';
             $order->save();
 
             DB::commit();
