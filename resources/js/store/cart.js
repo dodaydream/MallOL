@@ -87,6 +87,10 @@ const actions = {
               inventory: data.inventory,
               qty: data.qty
           })
+        }).catch(e => {
+          if (e.response.status === 401) {
+            window.location.href = `/login?redirect_to=${window.location.pathname}`;
+          }
         })
       } else {
         window.axios.post(`/carts/${cartItem.id}`, {
