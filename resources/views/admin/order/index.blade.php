@@ -49,12 +49,12 @@
                                             </label>
                                         </th>
 
-                                        <th is='sortable' :column="'id'">{{ trans('admin.order.columns.id') }}</th>
+                                        <th is='sortable' :column="'created_at'">Created at</th>
                                         <th is='sortable' :column="'status'">Status</th>
                                         <th is='sortable' :column="'po_number'">{{ trans('admin.order.columns.po_number') }}</th>
-                                        <th is='sortable' :column="'completed_at'">{{ trans('admin.order.columns.completed_at') }}</th>
+                                        <th>Customer</th>
                                         <th is='sortable' :column="'total_price'">{{ trans('admin.order.columns.total_price') }}</th>
-                                        <th is='sortable' :column="'user_id'">{{ trans('admin.order.columns.user_id') }}</th>
+                                        <th is='sortable' :column="'completed_at'">{{ trans('admin.order.columns.completed_at') }}</th>
 
                                         <th></th>
                                     </tr>
@@ -78,13 +78,13 @@
                                             </label>
                                         </td>
 
-                                    <td>@{{ item.id }}</td>
+                                        <td>@{{ item.created_at }}</td>
                                         <td>@{{ item.status }}</td>
                                         <td>@{{ item.po_number }}</td>
+                                        <td>@{{ item.user.name }}</td>
+                                        <td>MOP$ @{{ item.total_price }}</td>
                                         <td>@{{ item.completed_at }}</td>
-                                        <td>@{{ item.total_price }}</td>
-                                        <td>@{{ item.user_id }}</td>
-                                        
+
                                         <td>
                                             <div class="row no-gutters">
                                                 <div class="col-auto">

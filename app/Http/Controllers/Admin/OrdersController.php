@@ -31,16 +31,24 @@ class OrdersController extends Controller
      */
     public function index(IndexOrder $request)
     {
+        if (!$request->has('orderBy')) {
+            $request->merge(['orderBy' => 'created_at', 'orderDirection' => 'desc']);
+        }
+
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(Order::class)->processRequestAndGet(
             // pass the request with params
             $request,
 
             // set columns to query
-            ['id', 'status', 'po_number', 'completed_at', 'total_price', 'user_id'],
+            ['id', 'status', 'po_number', 'completed_at', 'total_price', 'user_id', 'created_at'],
 
             // set columns to searchIn
-            ['id', 'status', 'po_number', 'completed_at']
+            ['id', 'status', 'po_number', 'completed_at', 'created_at'],
+
+            function ($query) {
+                $query->with(['user']);
+            }
         );
 
         if ($request->ajax()) {
@@ -57,16 +65,20 @@ class OrdersController extends Controller
 
     public function indexUser(IndexOrder $request)
     {
+        if (!$request->has('orderBy')) {
+            $request->merge(['orderBy' => 'created_at', 'orderDirection' => 'desc']);
+        }
+
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(Order::class)->processRequestAndGet(
         // pass the request with params
             $request,
 
             // set columns to query
-            ['id', 'status', 'po_number', 'completed_at', 'total_price'],
+            ['id', 'status', 'po_number', 'completed_at', 'total_price', 'created_at'],
 
             // set columns to searchIn
-            ['status', 'po_number', 'completed_at'],
+            ['status', 'po_number', 'completed_at', 'created_at'],
 
             function ($query) use ($request){
                 $query->where('user_id', $request->user()->id);
