@@ -9,6 +9,7 @@
 <product-listing
     :data="{{ $data->toJson() }}"
     :url="'{{ url('products') }}'"
+    keywords="{{ Request::query('keywords') }}"
     inline-template>
 
     <div>
@@ -31,9 +32,9 @@
                     <b-input placeholder="Search..."
                         type="search"
                         icon="magnify"
-                        v-model="search" @keyup.enter="filter('search', $event.target.value)" 
+                        v-model="search" @keyup.enter.native="($event) => { filter('search', $event.target.value); $root.setSearchValue($event.target.value)}"
                         icon-clickable
-                        @icon-click="filter('search', search)">
+                        @icon-click="() => { filter('search', search); $root.setSearchValue(search) }">
                     </b-input>
 
                 </form>

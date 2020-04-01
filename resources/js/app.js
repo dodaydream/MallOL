@@ -58,7 +58,19 @@ const app = new Vue({
     created () {
         this.retrieveCartItem()
     },
+    data () {
+        return {
+            keywords: ''
+        }
+    },
     methods: {
+        toSearch(keywords) {
+            window.location = `/products?keywords=${keywords}`
+        },
+        setSearchValue(keywords) {
+            this.keywords = keywords
+            history.pushState(null, 'Products - MallOL' , `/products?keywords=${keywords}`);
+        },
         ...mapActions('cart', [
             'retrieveCartItem'
         ])

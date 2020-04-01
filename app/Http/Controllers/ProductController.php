@@ -33,6 +33,9 @@ class ProductController extends Controller
      */
     public function index(IndexProduct $request)
     {
+        if ($request->has('keywords')) {
+            $request->merge(['search' => $request->query('keywords')]);
+        }
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(Product::class)->processRequestAndGet(
             // pass the request with params

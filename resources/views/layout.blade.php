@@ -82,7 +82,9 @@
                             <b-input placeholder="Search..."
                                 type="search"
                                 icon="magnify"
+                                :value="keywords ? keywords : '{{ Request::query('keywords') }}'"
                                 icon-clickable
+                                @keyup.enter.native="toSearch($event.target.value)"
                                 >
                             </b-input>
                         </b-field>

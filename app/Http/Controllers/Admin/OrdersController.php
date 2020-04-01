@@ -75,7 +75,7 @@ class OrdersController extends Controller
             $request,
 
             // set columns to query
-            ['id', 'status', 'po_number', 'completed_at', 'total_price', 'created_at'],
+            ['id', 'status', 'po_number', 'completed_at', 'total_price', 'created_at', 'user_id'],
 
             // set columns to searchIn
             ['status', 'po_number', 'completed_at', 'created_at'],
