@@ -56,8 +56,24 @@
   </div>
                                 </td>
                                 <td>{{ $item->qty }}</td>
-                                <td>MOP$ {{ $item->inventory->product->price}}</td>
-                                <td>MOP$ {{ number_format($item->qty * $item->inventory->product->price, 2) }}</td>
+            <td>
+                @if ($item->inventory->product->is_promote)
+                    <del class="has-text-grey">MOP$ {{ $item->inventory->product->price}}</del>
+                    <span class="has-text-danger">MOP$ {{ $item->inventory->product->promote_price }}</span>
+                @else
+                    MOP$ {{ $item->inventory->product->price}}
+                @endif
+            </td>
+
+            <td>
+                @if ($item->inventory->product->is_promote)
+                    <del class="has-text-grey">MOP$ {{ number_format($item->qty * $item->inventory->product->price, 2) }}</del>
+                    <span class="has-text-danger">MOP$ {{ number_format($item->qty * $item->inventory->product->promote_price, 2) }}</span>
+                @else
+                    MOP$ {{ number_format($item->qty * $item->inventory->product->price, 2) }}
+                @endif
+            </td>
+
                                 
                             </tr>
 @endforeach

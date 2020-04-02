@@ -13,7 +13,9 @@
   <div class="panel is-primary">
     <div class="panel-heading">
       <i class="fa fa-align-justify"></i> Shopping Cart
-        <div class="float-right">Total: MOP$ @{{ collection.reduce((acc, item) => acc + item.qty * item.inventory.product.price, 0).toFixed(2) }}</div>
+        <div class="float-right">
+            Total: MOP$ @{{ collection.reduce((acc, item) => acc + item.qty * (item.inventory.product.is_promote ? item.inventory.product.promote_price : item.inventory.product.price), 0).toFixed(2) }}
+        </div>
     </div>
 
     <div class="panel-block">
@@ -84,11 +86,19 @@
 :min="1"
 :max="999"
 ></b-numberinput></td>
-                                <td>MOP$ @{{ item.inventory.product.price}}</td>
-                                <td>MOP$ @{{ (item.qty * item.inventory.product.price).toFixed(2) }}</td>
-                                
-                                <td>
-                                            <b-button type="is-danger" class="btn btn-sm btn-danger" title="{{ trans('brackets/admin-ui::admin.btn.delete') }}" @click="deleteItem(item.resource_url)"><b-icon icon="delete"></b-icon></b-button>
+            <td v-if="item.inventory.product.is_promote">
+                <del class="has-text-grey">MOP$ @{{ item.inventory.product.price }}</del>
+                <span class="has-text-danger">MOP$ @{{ item.inventory.product.promote_price }}</span>
+            </td>
+            <td v-else>MOP$ @{{ item.inventory.product.price }}</td>
+
+            <td v-if="item.inventory.product.is_promote">
+                <del class="has-text-grey">MOP$ @{{ (item.qty * item.inventory.product.price).toFixed(2) }}</del>
+                <span class="has-text-danger">MOP$ @{{ (item.qty * item.inventory.product.promote_price).toFixed(2) }}</span>
+            </td>
+            <td class="has-text-grey" v-else>MOP$ @{{ (item.qty * item.inventory.product.price).toFixed(2) }}</td>
+            <td>
+                <b-button type="is-danger" class="btn btn-sm btn-danger" title="{{ trans('brackets/admin-ui::admin.btn.delete') }}" @click="deleteItem(item.resource_url)"><b-icon icon="delete"></b-icon></b-button>
                                 </td>
                             </tr>
       </tbody>

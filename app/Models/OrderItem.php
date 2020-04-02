@@ -35,7 +35,11 @@ class OrderItem extends Model
 
         $item = new OrderItem;
         // TODO implement promote price
-        $item->price = $cart->inventory->product->price;
+        $price = $cart->inventory->product->price;
+        if ($cart->inventory->product->is_promote) {
+            $price = $cart->inventory->product->promote_price;
+        }
+        $item->price = $price;
         $item->qty = $cart->qty;
         $item->total_price = $item->price * $item->qty;
         $item->inventory_id = $cart->inventory_id;
