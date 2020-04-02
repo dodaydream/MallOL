@@ -112,7 +112,7 @@
                             </b-dropdown>
 
                             <b-dropdown aria-role="list" hoverable position="is-bottom-left" class="custom">
-                                <button class="button has-badge-rounded is-white has-badge-danger" slot="trigger" data-badge="{{ Auth::user()->unreadNotifications()->count() }}">
+                                <button class="button has-badge-rounded is-white has-badge-danger" slot="trigger" :data-badge="{{ Auth::user()->unreadNotifications->count() }} > 0 ? {{ Auth::user()->unreadNotifications->count() }} : null">
                                     <b-icon icon="bell"></b-icon>
                                 </button>
 
@@ -125,20 +125,44 @@
                                     <div class="modal-card" style="width:350px;">
                                         <header class="modal-card-head">
                                             <p class="modal-card-title">Notifications</p>
+                                            <b-button class="float-right" @click="markAllAsRead">
+                                                <b-icon icon="notification-clear-all" class="border-0"></b-icon>
+                                            </b-button>
                                         </header>
                                     </div>
                                 </b-dropdown-item>
 
-                                <a class="navbar-item " href="https://bulma.io/backers">
+                                @if (Auth::user()->unreadNotifications->count() > 0)
+                                <div class="navbar-item">Unread Notifications</div>
+
+                                @foreach (Auth::user()->unreadNotifications as $notification)
+                                <a class="navbar-item " href="/order/{{ $notification->data['order_id'] }}?via={{ $notification->id }}">
                                       <span>
-                                        <span class="icon has-text-patreon">
-                                          <svg class="svg-inline--fa fa-patreon fa-w-16" aria-hidden="true" data-prefix="fab" data-icon="patreon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M512 194.8c0 101.3-82.4 183.8-183.8 183.8-101.7 0-184.4-82.4-184.4-183.8 0-101.6 82.7-184.3 184.4-184.3C429.6 10.5 512 93.2 512 194.8zM0 501.5h90v-491H0v491z"></path></svg><!-- <i class="fab fa-patreon"></i> -->
-                                        </span>
-                                        <strong>Patreon Backers</strong>
+                                        <strong>{{ $notification->data['po_number'] }}</strong>
                                         <br>
-                                        Everyone who is supporting Bulma
+                                          Order {{ $notification->data['status'] }}
+                                          <br>
+                                          <small> {{ $notification->created_at }}</small>
                                       </span>
                                     </a>
+                                @endforeach
+                                @endif
+
+                                @if (Auth::user()->notifications()->whereNotNull('read_at')->count() > 0)
+                                    <div class="navbar-item has-background-light">Read Notifications</div>
+
+                                    @foreach (Auth::user()->notifications()->whereNotNull('read_at')->get() as $notification)
+                                        <a class="navbar-item has-background-light" href="/order/{{ $notification->data['order_id'] }}">
+                                      <span>
+                                        <strong>{{ $notification->data['po_number'] }}</strong>
+                                        <br>
+                                          Order {{ $notification->data['status'] }}
+                                          <br>
+                                          <small> {{ $notification->created_at }}</small>
+                                      </span>
+                                        </a>
+                                    @endforeach
+                                @endif
 
                             </b-dropdown>
 

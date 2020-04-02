@@ -125,6 +125,7 @@ Route::post('/checkout_success', 'CheckoutController@checkout_success')->name('c
 
 Route::get('/orders',                                             'Admin\OrdersController@indexUser')->name('orders');
 Route::get('/order/{order}',                                 'Admin\OrdersController@userShow')->name('order/show');
+Route::post('/notifications/clean',                                 'Admin\OrdersController@cleanNotif')->name('order/cleanNotif');
 
 
 /* Auto-generated admin routes */

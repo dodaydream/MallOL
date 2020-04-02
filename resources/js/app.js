@@ -71,6 +71,17 @@ const app = new Vue({
             this.keywords = keywords
             history.pushState(null, 'Products - MallOL' , `/products?keywords=${keywords}`);
         },
+        markAllAsRead() {
+            window.axios.post('/notifications/clean', null).then(({data}) => {
+                window.location.reload()
+            }).catch(e => {
+                this.$notify({
+                    type: 'error',
+                    title: 'Error!',
+                    text: 'Cannot clear'
+                })
+            })
+        },
         ...mapActions('cart', [
             'retrieveCartItem'
         ])

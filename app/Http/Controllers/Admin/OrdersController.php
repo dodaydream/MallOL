@@ -16,9 +16,11 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\View\View;
 
 class OrdersController extends Controller
@@ -156,11 +158,21 @@ class OrdersController extends Controller
      * @throws AuthorizationException
      * @return void
      */
-    public function userShow(Order $order)
+    public function userShow(Request $request, Order $order)
     {
+        if ($request->has('via')) {
+            $request->user()->notifications()->find($request->query('via'))->markAsRead();
+        }
+
         return view('admin.order.user-show', [
             'order' => $order,
         ]);
+    }
+
+    public function cleanNotif(Request $request)
+    {
+        $request->user()->unreadNotifications->markAsRead();
+        return [ 'message' => 'cleaned'];
     }
 
     /**
