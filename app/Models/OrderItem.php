@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderItem extends Model
 {
+    protected $with = ['inventory.product'];
+
     protected $fillable = [
         'price',
         'total_price',
@@ -46,5 +48,10 @@ class OrderItem extends Model
         $item->order_id = $order_id;
 
         return $item;
+    }
+
+    public function inventory()
+    {
+        return $this->belongsTo(Inventory::class);
     }
 }

@@ -2031,6 +2031,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
+
+var _lodash = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('cart', {
     products: 'cartProducts',
@@ -2043,7 +2046,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         qty: value
       });
     },
-    checkout: function checkout() {// TODO
+    checkout: function checkout() {
+      var itemsToCheckout = this.products.map(function (item) {
+        return item.id;
+      });
+      var form = document.createElement('form');
+      form.style.visibility = 'hidden';
+      form.method = 'POST';
+      form.action = '/checkout';
+      var input = document.createElement('input');
+      input.name = 'ids';
+      input.value = JSON.stringify(itemsToCheckout);
+      var inputCsrf = document.createElement('input'); // csrf protection
+
+      inputCsrf.name = '_token';
+      inputCsrf.value = $('meta[name="csrf-token"]').attr('content');
+      form.appendChild(input);
+      form.appendChild(inputCsrf);
+      document.body.appendChild(form);
+      form.submit();
     }
   })
 });
@@ -106682,6 +106703,10 @@ Vue.component('cart-listing', {
       form.appendChild(inputCsrf);
       document.body.appendChild(form);
       form.submit();
+    },
+    checkoutAll: function checkoutAll() {
+      this.onBulkItemsClickedAllWithPagination();
+      this.checkout();
     }
   })
 });
@@ -106874,6 +106899,20 @@ var app = new Vue({
     setSearchValue: function setSearchValue(keywords) {
       this.keywords = keywords;
       history.pushState(null, 'Products - MallOL', "/products?keywords=".concat(keywords));
+    },
+    markAllAsRead: function markAllAsRead() {
+      var _this = this;
+
+      window.axios.post('/notifications/clean', null).then(function (_ref) {
+        var data = _ref.data;
+        window.location.reload();
+      })["catch"](function (e) {
+        _this.$notify({
+          type: 'error',
+          title: 'Error!',
+          text: 'Cannot clear'
+        });
+      });
     }
   }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('cart', ['retrieveCartItem']))
 });
@@ -107409,7 +107448,7 @@ var actions = {
           var data = _ref9.data;
           commit('pushInventoryToCart', {
             id: data.id,
-            product: data.product,
+            product: data.inventory.product,
             inventory: data.inventory,
             qty: data.qty
           });

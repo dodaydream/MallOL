@@ -112850,6 +112850,10 @@ Vue.component('cart-listing', {
       form.appendChild(inputCsrf);
       document.body.appendChild(form);
       form.submit();
+    },
+    checkoutAll: function checkoutAll() {
+      this.onBulkItemsClickedAllWithPagination();
+      this.checkout();
     }
   })
 });
