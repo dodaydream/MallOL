@@ -32,6 +32,10 @@ Vue.component('cart-listing', {
       form.appendChild(inputCsrf)
       document.body.appendChild(form);
       form.submit();
+    },
+    checkoutAll () {
+      this.onBulkItemsClickedAllWithPagination()
+      this.checkout()
     }
   }
 });

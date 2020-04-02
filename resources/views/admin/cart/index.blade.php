@@ -35,7 +35,7 @@
         <thead>
           <tr>
             <th class="bulk-checkbox">
-              <b-checkbox id="enabled" type="checkbox" v-model="isClickedAll" v-validate="''" data-vv-name="enabled"  name="enabled_fake_element" @click="onBulkItemsClickedAllWithPagination()"></b-checkbox>
+              <b-checkbox id="enabled" type="checkbox" v-model="isClickedAll" v-validate="''" data-vv-name="enabled"  name="enabled_fake_element" @input="onBulkItemsClickedAllWithPagination()"></b-checkbox>
             </th>
             <th>{{ trans('admin.product.columns.name') }}</th>
             <th>{{ trans('admin.cart.columns.qty') }}</th>
@@ -113,6 +113,7 @@
     </div>
   </div>
                 <b-button type="is-primary" @click="checkout">Checkout</b-button>
+    <b-button type="is-primary" @click="checkoutAll">Checkout All</b-button>
 </div>
 </cart-listing>
 

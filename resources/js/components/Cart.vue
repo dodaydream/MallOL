@@ -47,6 +47,9 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+
+var _lodash = require('lodash');
+
 export default {
     computed: {
         ...mapGetters('cart', {
@@ -62,7 +65,24 @@ export default {
             this.changeQuantity({ id: id, qty: value })
         },
         checkout () {
-        // TODO
+            let itemsToCheckout = this.products.map(item => item.id);
+
+            var form = document.createElement('form');
+            form.style.visibility = 'hidden';
+            form.method = 'POST';
+            form.action = '/checkout';
+            var input = document.createElement('input');
+            input.name = 'ids';
+            input.value = JSON.stringify(itemsToCheckout);
+
+            var inputCsrf = document.createElement('input');
+            // csrf protection
+            inputCsrf.name = '_token';
+            inputCsrf.value = $('meta[name="csrf-token"]').attr('content');
+            form.appendChild(input)
+            form.appendChild(inputCsrf)
+            document.body.appendChild(form);
+            form.submit();
         }
     }
 }
