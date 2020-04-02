@@ -18,5 +18,6 @@ services:
         environment:
             - MYSQL_ROOT_PASSWORD=secret
             - MYSQL_DATABASE=mallol
+            - MYSQL_ROOT_HOST=%
         ports:
-            - 3306:33060
+            - 33060:3306
