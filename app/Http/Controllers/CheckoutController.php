@@ -80,7 +80,9 @@ class CheckoutController extends Controller
             $order = Order::create([
                 'po_number' => $po_number,
                 'user_id' => $user_id,
-                'total_price' => 0
+                'total_price' => 0,
+                'address' => $request->user()->address,
+                'address_name' => $request->user()->name
             ]);
 
             $orderId = $order->id;

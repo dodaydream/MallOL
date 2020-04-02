@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title', 'Checkout')
+
 @section('content')
 <order :ids="@json($ids)">
 <div class="card">
@@ -10,11 +12,8 @@
     </header>
     <div class="card-content">
         <div class="content">
-        <p>John Doe</p>
-        1600 Amphitheatre Parkway
-        <br>
-        Mountain View, California
-        <br>United States
+        <p>{{ Auth::user()->name }}</p>
+            {!! nl2br(Auth::user()->address) !!}
         </div>
     </div>
 </div>

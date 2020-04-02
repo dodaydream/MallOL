@@ -132,6 +132,10 @@
                                     </div>
                                 </b-dropdown-item>
 
+                                @if (Auth::user()->notifications->count() == 0)
+                                    <div class="navbar-item">No Notification</div>
+                                @endif
+
                                 @if (Auth::user()->unreadNotifications->count() > 0)
                                 <div class="navbar-item">Unread Notifications</div>
 

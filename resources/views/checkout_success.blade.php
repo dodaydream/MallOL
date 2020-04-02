@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title', 'Checkout Success')
+
 @section('content')
 <div class="card">
     <header class="card-header">
@@ -9,11 +11,8 @@
     </header>
     <div class="card-content">
         <div class="content">
-        <p>John Doe</p>
-        1600 Amphitheatre Parkway
-        <br>
-        Mountain View, California
-        <br>United States
+            <p>{{ Auth::user()->name }}</p>
+            {!! nl2br(Auth::user()->address) !!}
         </div>
     </div>
 </div>

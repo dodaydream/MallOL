@@ -32,11 +32,8 @@
                         User: {{ $order->user->name }}</br>
                         Ordered At: {{ $order->created_at }}
         <p></p>
-        <p>John Doe</p>
-        1600 Amphitheatre Parkway
-        <br>
-        Mountain View, California
-        <br>United States
+        <p>{{ $order->address_name }}</p>
+            {!! nl2br($order->address) !!}
                     </div>
                     
                     

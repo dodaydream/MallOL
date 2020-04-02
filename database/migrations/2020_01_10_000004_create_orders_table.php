@@ -30,6 +30,9 @@ class CreateOrdersTable extends Migration
             $table->decimal('total_price', 32, 2);
             $table->unsignedBigInteger('user_id');
 
+            $table->string('address');
+            $table->string('address_name');
+
             $table->index(["user_id"], 'fk_orders_users1_idx');
 
             $table->foreign('user_id', 'fk_orders_users1_idx')

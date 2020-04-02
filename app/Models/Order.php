@@ -12,7 +12,9 @@ class Order extends Model
         'completed_at',
         'total_price',
         'user_id',
-        'status'
+        'status',
+        'address',
+        'address_name'
     ];
     
     
