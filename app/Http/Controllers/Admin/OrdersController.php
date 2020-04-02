@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\Order\IndexOrder;
 use App\Http\Requests\Admin\Order\StoreOrder;
 use App\Http\Requests\Admin\Order\UpdateOrder;
 use App\Models\Order;
+use App\Notifications\OrderStatusChanged;
 use Brackets\AdminListing\Facades\AdminListing;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -192,6 +193,9 @@ class OrdersController extends Controller
 
         // Update changed values Order
         $order->update($sanitized);
+
+        // Notify user about status changed
+        $order->user->notify(new OrderStatusChanged($order));
 
         if ($request->ajax()) {
             return [
