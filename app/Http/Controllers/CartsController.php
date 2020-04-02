@@ -103,7 +103,7 @@ class CartsController extends Controller
         $cart = Cart::create($sanitized);
 
         if ($request->ajax()) {
-            return $cart; 
+            return $cart->load('inventory.product');
         }
     }
 

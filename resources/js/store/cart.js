@@ -83,7 +83,7 @@ const actions = {
         }).then(({data}) => {
           commit('pushInventoryToCart', {
               id: data.id,
-              product: data.product,
+              product: data.inventory.product,
               inventory: data.inventory,
               qty: data.qty
           })
