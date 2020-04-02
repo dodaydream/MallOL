@@ -29,8 +29,8 @@ class UpdateOrder extends FormRequest
             'po_number' => ['sometimes', 'string'],
             'completed_at' => ['nullable', 'string'],
             'total_price' => ['sometimes', 'numeric'],
-            'user_id' => ['sometimes', 'string'],
-            
+            'user_id' => ['sometimes', 'integer'],
+            'status' => ['sometimes', 'string'],
         ];
     }
 

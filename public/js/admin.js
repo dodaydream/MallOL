@@ -113104,9 +113104,35 @@ Vue.component('order-form', {
         po_number: '',
         completed_at: '',
         total_price: '',
-        user_id: ''
+        user_id: '',
+        status: 'pending'
       }
     };
+  },
+  methods: {
+    updateOrderStatus: function updateOrderStatus(status) {
+      var _this = this;
+
+      var prevStatus = this.form.status;
+      this.form.status = status;
+      window.axios.post(this.action, this.form).then(function (_ref) {
+        var data = _ref.data;
+
+        _this.$notify({
+          type: 'success',
+          title: 'Success!',
+          text: 'Order status changed to' + status
+        });
+      })["catch"](function (e) {
+        _this.$notify({
+          type: 'error',
+          title: 'Failed!',
+          text: e.response.data.message
+        });
+
+        _this.form.status = prevStatus;
+      });
+    }
   }
 });
 

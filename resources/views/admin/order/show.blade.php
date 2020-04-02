@@ -5,19 +5,27 @@
 @section('body')
 
     <div class="container-xl">
-        <div class="card">
 
-            <order-form
+        <order-form
                 :action="'{{ $order->resource_url }}'"
                 :data="{{ $order->toJson() }}"
                 v-cloak
                 inline-template>
+            <div>
+            <div class="card">
+
             
                 <form class="form-horizontal form-edit" method="post" @submit.prevent="onSubmit" :action="action" novalidate>
 
 
                     <div class="card-header">
-                       {{ $order->po_number }} 
+                       {{ $order->po_number }}
+                        <div class="float-right">
+                            <span class="badge badge-info" v-if="form.status === 'pending'">Pending</span>
+                            <span class="badge badge-warning" v-if="form.status === 'hold'">Hold</span>
+                            <span class="badge badge-success" v-if="form.status === 'shipped'">Shipped</span>
+                            <span class="badge badge-danger" v-if="form.status === 'cancelled'">Cancelled</span>
+                        </div>
                     </div>
 
                     <div class="card-body">
@@ -34,8 +42,18 @@
                     
                 </form>
 
-        </order-form>
     </div>
+
+    <div class="card" v-if="form.status === 'pending' || form.status === 'hold'">
+        <div class="card-body">
+            <button class="btn btn-warning" @click="updateOrderStatus('hold')" v-if="form.status === 'pending'">Hold</button>
+            <button class="btn btn-success" @click="updateOrderStatus('shipped')" v-if="form.status === 'pending' || form.status === 'hold'">Ship</button>
+            <button class="btn btn-danger" @click="updateOrderStatus('cancelled')" v-if="form.status === 'pending' || form.status === 'hold'">Cancel</button>
+        </div>
+    </div>
+            </div>
+
+    </order-form>
 
     <order-item-listing
         :url="'{{ url('admin/order-items?order_id=') }}{{ $order->id }}'"

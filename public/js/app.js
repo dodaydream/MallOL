@@ -106598,6 +106598,24 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/admin/app-components/Form/AppForm.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/admin/app-components/Form/AppForm.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var craftable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! craftable */ "./node_modules/craftable/dist/index.js");
+/* harmony import */ var craftable__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(craftable__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [craftable__WEBPACK_IMPORTED_MODULE_0__["BaseForm"]]
+});
+
+/***/ }),
+
 /***/ "./resources/js/admin/app-components/Listing/AppListing.js":
 /*!*****************************************************************!*\
   !*** ./resources/js/admin/app-components/Listing/AppListing.js ***!
@@ -106670,6 +106688,93 @@ Vue.component('cart-listing', {
 
 /***/ }),
 
+/***/ "./resources/js/admin/order-item/Listing.js":
+/*!**************************************************!*\
+  !*** ./resources/js/admin/order-item/Listing.js ***!
+  \**************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _app_components_Listing_AppListing__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../app-components/Listing/AppListing */ "./resources/js/admin/app-components/Listing/AppListing.js");
+
+Vue.component('order-item-listing', {
+  mixins: [_app_components_Listing_AppListing__WEBPACK_IMPORTED_MODULE_0__["default"]]
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/order/Form.js":
+/*!******************************************!*\
+  !*** ./resources/js/admin/order/Form.js ***!
+  \******************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _app_components_Form_AppForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../app-components/Form/AppForm */ "./resources/js/admin/app-components/Form/AppForm.js");
+
+Vue.component('order-form', {
+  mixins: [_app_components_Form_AppForm__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  data: function data() {
+    return {
+      form: {
+        po_number: '',
+        completed_at: '',
+        total_price: '',
+        user_id: '',
+        status: 'pending'
+      }
+    };
+  },
+  methods: {
+    updateOrderStatus: function updateOrderStatus(status) {
+      var _this = this;
+
+      var prevStatus = this.form.status;
+      this.form.status = status;
+      window.axios.post(this.action, this.form).then(function (_ref) {
+        var data = _ref.data;
+
+        _this.$notify({
+          type: 'success',
+          title: 'Success!',
+          text: 'Order status changed to' + status
+        });
+      })["catch"](function (e) {
+        _this.$notify({
+          type: 'error',
+          title: 'Failed!',
+          text: e.response.data.message
+        });
+
+        _this.form.status = prevStatus;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/order/Listing.js":
+/*!*********************************************!*\
+  !*** ./resources/js/admin/order/Listing.js ***!
+  \*********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _app_components_Listing_AppListing__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../app-components/Listing/AppListing */ "./resources/js/admin/app-components/Listing/AppListing.js");
+
+Vue.component('order-listing', {
+  mixins: [_app_components_Listing_AppListing__WEBPACK_IMPORTED_MODULE_0__["default"]]
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -106727,6 +106832,9 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 Vue.component('product', __webpack_require__(/*! ./components/Product.vue */ "./resources/js/components/Product.vue")["default"]);
 Vue.component('product-listing', __webpack_require__(/*! ./components/ProductListing.js */ "./resources/js/components/ProductListing.js")["default"]);
 Vue.component('cart-listing', __webpack_require__(/*! ./admin/cart/Listing.js */ "./resources/js/admin/cart/Listing.js")["default"]);
+Vue.component('order-listing', __webpack_require__(/*! ./admin/order/Listing.js */ "./resources/js/admin/order/Listing.js")["default"]);
+Vue.component('order-form', __webpack_require__(/*! ./admin/order/Form.js */ "./resources/js/admin/order/Form.js")["default"]);
+Vue.component('order-item-listing', __webpack_require__(/*! ./admin/order-item/Listing.js */ "./resources/js/admin/order-item/Listing.js")["default"]);
 Vue.component('cart', __webpack_require__(/*! ./components/Cart.vue */ "./resources/js/components/Cart.vue")["default"]);
 Vue.component('order', __webpack_require__(/*! ./checkout.vue */ "./resources/js/checkout.vue")["default"]);
 Vue.use(buefy__WEBPACK_IMPORTED_MODULE_2__["default"]);
@@ -106754,7 +106862,20 @@ var app = new Vue({
   created: function created() {
     this.retrieveCartItem();
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('cart', ['retrieveCartItem']))
+  data: function data() {
+    return {
+      keywords: ''
+    };
+  },
+  methods: _objectSpread({
+    toSearch: function toSearch(keywords) {
+      window.location = "/products?keywords=".concat(keywords);
+    },
+    setSearchValue: function setSearchValue(keywords) {
+      this.keywords = keywords;
+      history.pushState(null, 'Products - MallOL', "/products?keywords=".concat(keywords));
+    }
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('cart', ['retrieveCartItem']))
 });
 
 /***/ }),
@@ -107161,7 +107282,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _admin_app_components_Listing_AppListing__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../admin/app-components/Listing/AppListing */ "./resources/js/admin/app-components/Listing/AppListing.js");
 
 Vue.component('product-listing', {
-  mixins: [_admin_app_components_Listing_AppListing__WEBPACK_IMPORTED_MODULE_0__["default"]]
+  mixins: [_admin_app_components_Listing_AppListing__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  props: ['keywords'],
+  created: function created() {
+    this.search = this.keywords;
+  }
 });
 
 /***/ }),
@@ -107288,6 +107413,10 @@ var actions = {
             inventory: data.inventory,
             qty: data.qty
           });
+        })["catch"](function (e) {
+          if (e.response.status === 401) {
+            window.location.href = "/login?redirect_to=".concat(window.location.pathname);
+          }
         });
       } else {
         window.axios.post("/carts/".concat(cartItem.id), {
