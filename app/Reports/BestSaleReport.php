@@ -2,6 +2,8 @@
 
 namespace App\Reports;
 
+use App\Models\DateDimension;
+use App\Models\Order;
 use App\Models\OrderItem;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -27,8 +29,9 @@ class BestSaleReport extends KoolReport
     function setup()
     {
         $this->src('elo')->query(
-            OrderItem::where('created_at', '<', Carbon::now())
-                ->where('created_at', '>', Carbon::now()->sub('30 days'))
+            Order::where('orders.created_at', '<', $this->params['ends'])
+                ->where('orders.created_at', '>', $this->params['starts'])
+                ->join('order_items', 'order_items.order_id', '=', 'orders.id')
                 ->join('inventories', 'inventories.id', '=', 'order_items.inventory_id')
                 ->join('products', 'products.id', '=', 'inventories.product_id')
                 ->groupBy('products.id')
@@ -38,8 +41,9 @@ class BestSaleReport extends KoolReport
         )->pipe($this->dataStore("best_profit_products")); ;
 
         $this->src('elo')->query(
-            OrderItem::where('created_at', '<', Carbon::now())
-                ->where('created_at', '>', Carbon::now()->sub('30 days'))
+            Order::where('orders.created_at', '<', $this->params['ends'])
+                ->where('orders.created_at', '>', $this->params['starts'])
+                ->join('order_items', 'order_items.order_id', '=', 'orders.id')
                 ->join('inventories', 'inventories.id', '=', 'order_items.inventory_id')
                 ->join('products', 'products.id', '=', 'inventories.product_id')
                 ->groupBy('products.id', 'order_items.qty')
@@ -47,5 +51,16 @@ class BestSaleReport extends KoolReport
                 ->orderBy('purchase', 'desc')
                 ->limit(10)
         )->pipe($this->dataStore("best_sale_products")); ;
+
+        $this->src('elo')->query(
+            DateDimension::where('date', '<', $this->params['ends'])
+                ->where('date', '>', $this->params['starts'])
+                ->leftJoin('orders', 'date_dimensions.date', '=', DB::raw('date(orders.created_at)'))
+                ->leftJoin('order_items', 'order_items.order_id', '=', 'orders.id')
+                ->select(DB::raw('sum(order_items.total_price) as total, date'))
+                ->groupBy('date')
+                ->orderBy('date', 'asc')
+                ->limit(30)
+        )->pipe($this->dataStore("daily_sales_trend")); ;
     }
 }

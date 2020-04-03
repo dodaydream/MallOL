@@ -16,7 +16,7 @@ class PopulateDateDimensionsTableCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:PopulateDateDimensionsTableCommand';
+    protected $signature = 'app:populate-date-dimension';
 
     /**
      * The console command description.

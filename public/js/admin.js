@@ -112589,7 +112589,27 @@ vue__WEBPACK_IMPORTED_MODULE_11___default.a.use(vue_quill_editor__WEBPACK_IMPORT
 vue__WEBPACK_IMPORTED_MODULE_11___default.a.use(vue_notification__WEBPACK_IMPORTED_MODULE_4___default.a);
 vue__WEBPACK_IMPORTED_MODULE_11___default.a.use(vue_cookie__WEBPACK_IMPORTED_MODULE_8___default.a);
 new vue__WEBPACK_IMPORTED_MODULE_11___default.a({
-  mixins: [craftable__WEBPACK_IMPORTED_MODULE_9__["Admin"]]
+  mixins: [craftable__WEBPACK_IMPORTED_MODULE_9__["Admin"]],
+  data: function data() {
+    return {
+      date: null
+    };
+  },
+  created: function created() {
+    if (!window.location.search) {
+      var end = new Date();
+      var start = new Date();
+      start.setDate(end.getDate() - 30);
+      this.date = start.toISOString().slice(0, 10) + ' to ' + end.toISOString().slice(0, 10);
+    } else {
+      this.date = unescape(window.location.search).slice(7);
+    }
+  },
+  methods: {
+    changeDateFilter: function changeDateFilter() {
+      window.location.href = '/admin/?range=' + this.date;
+    }
+  }
 });
 
 /***/ }),

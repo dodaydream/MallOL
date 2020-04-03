@@ -3,6 +3,19 @@ use \koolreport\widgets\koolphp\Table;
 ?>
 
 <div class="row">
+    <div class="col">
+        <?php
+    \koolreport\widgets\google\LineChart::create(array(
+        "title"=>"Sales trend",
+        "dataSource"=>$this->dataStore("daily_sales_trend"),
+        "columns"=>array(
+            "date" => [ 'label' => 'Date', 'type' => 'date'],
+            "total"=>array("label"=>"Sales","type"=>"number", 'prefix' => 'MOP$ '),
+        ),
+    ));?>
+    </div>
+</div>
+<div class="row">
 <div class="col">
     <?php
     \koolreport\widgets\google\BarChart::create(array(
@@ -10,7 +23,7 @@ use \koolreport\widgets\koolphp\Table;
         "dataSource"=>$this->dataStore("best_sale_products"),
         "columns"=>array(
             "name",
-            "purchase"=>array("label"=>"Amount","type"=>"number"),
+            "purchase"=>array("label"=>"Qty","type"=>"number"),
         ),
     ));
     \koolreport\widgets\koolphp\Table::create([
@@ -18,7 +31,7 @@ use \koolreport\widgets\koolphp\Table;
         'columns' => [
             'product_id' => ['type' => 'string', 'label' => 'Product ID'],
             'name' => ['type' => 'string', 'label' => 'Name'],
-            'purchase' => ['type' => 'number', 'label' => 'Amount'],
+            'purchase' => ['type' => 'number', 'label' => 'Qty'],
         ]
     ]);
     ?>
@@ -30,7 +43,7 @@ use \koolreport\widgets\koolphp\Table;
         "dataSource"=>$this->dataStore("best_profit_products"),
         "columns"=>array(
             "name",
-            "total"=>array("label"=>"Amount","type"=>"number"),
+            "total"=>array("label"=>"Sales","type"=>"number"),
         ),
     ));
     \koolreport\widgets\koolphp\Table::create([
@@ -38,7 +51,7 @@ use \koolreport\widgets\koolphp\Table;
         'columns' => [
             'product_id' => ['type' => 'string', 'label' => 'Product ID'],
             'name' => ['type' => 'string', 'label' => 'Name'],
-            'total' => ['type' => 'number', 'label' => 'Amount', 'prefix' => 'MOP$ '],
+            'total' => ['type' => 'number', 'label' => 'Sales', 'prefix' => 'MOP$ '],
         ]
     ]);
     ?>
